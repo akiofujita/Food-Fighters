@@ -1,0 +1,39 @@
+.aboutPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutInfo {
+  width: 80vw;
+}
+
+.break {
+  height: 7px;
+  width: 35vw;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-inline: auto;
+
+  background-color: green;
+}
+
+.subHeader {
+  text-align: center;
+}
+
+.memberProfiles {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  max-width: 80vw;
+  height: 100%;
+}
+
+#aboutHeader {
+  margin-top: 50px;
+  text-align: center;
+}
