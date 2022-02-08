@@ -1,0 +1,15 @@
+.contactPage {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+#contactHeader {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+
+  text-align: center;
+}

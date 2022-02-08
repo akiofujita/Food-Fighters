@@ -1,0 +1,47 @@
+.footer {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: .1vh;
+  width:100%;
+  position:absolute;
+  bottom:0vh;
+}
+
+.socialLogo {
+  padding-inline: 13px;
+  filter: brightness(0) invert(1);
+}
+
+#socials {
+  margin-top: 35px;
+}
+
+#facebookLogo {
+  width: 35px;
+  height: 35px;
+}
+
+#instagramLogo {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 2px;
+}
+
+#twitterLogo {
+  width: 35px;
+  height: 30px;
+  margin-bottom: 2px;
+}
+
+#youtubeLogo {
+  width: 33px;
+  height: 26px;
+  margin-bottom: 3px;
+}
+
+#copyright {
+  color: white;
+}

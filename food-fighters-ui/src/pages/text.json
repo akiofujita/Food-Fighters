@@ -1,0 +1,150 @@
+{
+    "aboutText": "Purdue MIND’s purpose is to promote and grow the biomedical engineering community at Purdue by providing undergraduate students the opportunity to engage in hands-on activities, discuss current research, and network with a wide range of faculty both within and outside of Purdue including professors, physicians, and engineers. We are a unique, multidisciplinary student organization that seeks to innovate and develop medical technology. Our overall goals are listed below:",
+
+    "goal1": "To give Purdue undergraduates extensive experience with medical technology market research, design, prototyping, validation, regulatory approval, intellectual property management, and transition to market.",
+
+    "goal2": "To allow highly motivated students to network with each other and with professors and medical professionals and to collaborate on a significant, long-term, medically-focused project.",
+
+    "goal3": "To recognize the work done on the project through submission to national design competitions.",
+
+    "pres": 
+    {   
+        "name": "Jenna Munshi",
+        "pos" : "President",
+        "desc": "MIND has introduced me to an entirely different perspective on healthcare. I've not only learned new skills related to prototyping and design, but also developed my networking, entrepreneurial, time management, and leadership skills. It's been incredible to see how MIND has grown since my freshman year - from completing only one project a year to now having at least two at a time. Additionally, the club has grown significantly in size and diversity of majors. As President, I hope to provide the same opportunities I was given (ideation practice, networking, prototyping, etc) and more, for the members."
+    },
+
+    "vice": 
+    {
+        "name": "Kevin Bautista",
+        "pos" : "Vice President",
+        "desc": "MIND was my introduction to BME as a freshman, and a big reason of why I chose to major in it and go for a minor as well. I've been able to learn so much about innovation and instrumentation, and have been lucky to be surrounded with other amazing and diverse members. Moving forward, I hope to give other students more learning opportunities and experiences making great ideas that lead to global innovations."
+    },
+
+    "trea":
+    {
+        "name": "Akio Fujita",
+        "pos" : "Treasurer",
+        "desc": "I have been a part of MIND since freshman year and I enjoy working on the various biomedical projects with other members. MIND has helped me grow both technically and professionally and I am grateful to have had the opportunity to be part of this club. As an officer, I hope to reach out to more Purdue students and give them a chance to work on cool projects with MIND."
+    },
+
+    "secr":
+    {
+        "name": "Kyle Chang",
+        "pos" : "Secretary",
+        "desc": "I didn't know much about what the Biomedical Engineering field looks like when I was a freshman. Fortunately, I got to join the MIND and participated in the thorough designing process starting from problem identification, prototyping, to optimization. It not only helps me gaining deeper understanding about the major of BME before I joined in, but also helps me knowing some awesome friends sharing the same passion. In this upcoming school year, I aim to make sure that our members enjoy every meeting and every progression. We will be on track of our schedule to showcase our product in the end!"
+    },
+
+    "entr":
+    {
+        "name": "Elyssia Wellington",
+        "pos" : "Director of Entrepreneurship & Ideation",
+        "desc": "In my previous experience in mind I have become the secretary and learned how to load a group of intelligent individuals to a common goal.  I have also learned how to handle meeting notes and keeping advisors updated.  In my new position as director of entrepreneurship and ideation, I would like to be able to learn how to lead the group in competition submissions and outreach."
+    },
+
+    "rdev":
+    {
+        "name": "Matthew Starobat",
+        "pos" : "Director of Research & Development",
+        "desc": "I’ve found MIND to be a very welcoming and helpful community of people wanting to get hands on experience with research and production. It’s casual enough to be very approachable and easy to fit into my schedule while also being something I look forward to each week. Especially being outside of the biomedical major, I mainly hope to bring my manufacturing knowledge and enable others to be more ambitious with their projects and improve everyone else’s club experience."
+    },
+
+    "nete":
+    {
+        "name": "Claire Poukey",
+        "pos" : "Director of Networking & Events",
+        "desc": "Despite being a computer engineering major, I spent a lot of time as a CAD designer on Hydra-Check. I love MIND because it provides a fun, collaborative experience with peers who are motivated and passionate about what they do. MIND gives me an outlet to try out a variety of roles, and to perform applied engineering and make an impact on the world. As Director of Networking and Events, I hope to expand our social media following-base, improve alumni relations, and establish a professional development series for MIND."
+    },
+
+    "advisor1":
+    {
+        "name": "Dr. Hyowon Lee",
+        "desc": "Dr. Hyowon (Hugh) Lee is an Assistant Professor of Biomedical Engineering at Purdue University. He received his B.A. in Neuroscience from Colorado College and his M.S. and Ph.D. in Biomedical Engineering from the University of California, Los Angeles. Dr. Lee previously worked as a senior engineer for St. Jude Medical's Implantable Electronics Systems Division, focusing on advanced fabrication technologies to overcome manufacturing challenges associated with implantable electronic devices such as pacemakers, ICDs, DBS, and other neurostimulation devices. His current research interests include development of implantable microsystems for neurological application, minimally invasive neurostimulation devices, MEMS-cell interface, and micro and nanofabrication technologies."
+    },
+
+    "advisor2":
+    {
+        "name": "Dr. Orlando Hoilett",
+        "desc": "Dr. Orlando Hoilett is a Postdoctoral Researcher at Purdue University. He received his B.A. in Biomedical Engineering from Vanderbilt University and his Ph.D. in Biomedical Engineering from Purdue University. His research involves the engineering of biometric wearables to assist substance abuse disorder patients, mothers with newborns, and more. Orlando has also been an instrumental part of the Milestones Workshops, leading Intro to Electronics, Desigining a Smartwatch, Smart Healthcare, and iOS App Development courses."
+    },
+
+    "advisor3":
+    {
+        "name": "Mazin Hakim",
+        "desc": "Graduate Student in Biomedical Engineering at Purdue University\nB.A. Chemistry, Wabash College"
+    },
+
+    "advisor4":
+    {
+        "name": "Neal Patel",
+        "desc": "MD/PhD Candidate at IUSM and Purdue University\nB.S. Biomedical Engineering, Purdue University"
+    },
+
+    "seniorExec":
+    {
+        "damen":
+        {
+            "desc": "I am majoring in Biomedical Engineering at Purdue."
+        },
+
+        "jack":
+        {
+            "desc": "I am majoring in Biomedical Engineering at Purdue."
+        },
+
+        "parker":
+        {
+            "desc": "I am majoring in Biomedical Engineering at Purdue."
+        },
+
+        "scott":
+        {
+            "desc": "I am majoring in Electrical Engineering at Purdue."
+        }
+    },
+
+    "alumni":
+    {
+        "sriram":
+        {
+            "name": "Sriram Boppana",
+            "desc": "Founder/President (2015-2016)"
+        },
+
+        "pablo":
+        {
+            "name": "Pablo Argote",
+            "desc": "President (2016-2017)"
+        },
+
+        "dane":
+        {
+            "name": "Dane Albaugh",
+            "desc": "Director of Entrepreneurship & Ideation (2016-2017)"
+        },
+
+        "sam":
+        {
+            "name": "Sam Kuhns",
+            "desc": "Director of Research & Development (2017-2018)"
+        },
+
+        "scott":
+        {
+            "name": "Scott Guidoboni",
+            "desc": "Director of Entrepreneurship & Ideation (2017-2018)"
+        },
+
+        "pragna":
+        {
+            "name": "Pragna Upputuri",
+            "desc": "Director of Entrepreneurship and Ideation (2018-2019), Vice President (2019-2020), President (2020-2021)"
+        },
+
+        "david":
+        {
+            "name": "David Miller",
+            "desc": "Director of Research and Development (2017-2018)"
+        }
+    }
+}

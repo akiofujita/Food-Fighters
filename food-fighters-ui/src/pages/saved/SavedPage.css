@@ -1,0 +1,13 @@
+.savedPage {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.savedContainer {
+  text-align: center;
+  display: inherit;
+  flex-direction: column;
+}
