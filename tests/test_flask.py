@@ -1,8 +1,11 @@
 import unittest
-from app import app
 import requests
 import json
 import sys
+
+sys.path.append('../backend')
+
+import app
 
 class TestFlaskApiUsingRequests(unittest.TestCase):
     def test_hello_world(self):
