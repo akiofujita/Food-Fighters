@@ -3,9 +3,9 @@ import requests
 import json
 import sys
 
-sys.path.append('../backend')
+sys.path.append('.')
 
-import app
+import backend.app as app
 
 class TestFlaskApiUsingRequests(unittest.TestCase):
     def test_hello_world(self):
