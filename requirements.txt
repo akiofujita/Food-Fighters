@@ -1,3 +1,3 @@
 flask
-sqlite3
+sqlite
 python-dotenv
