@@ -1,3 +1,3 @@
-flask
-sqlite
+Flask
+sqlite3
 python-dotenv
