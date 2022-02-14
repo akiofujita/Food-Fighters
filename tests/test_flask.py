@@ -1,9 +1,11 @@
 import pytest
 import sys
 import json
-from backend.project import create_app
+sys.path.append('.')
 
-flask_app = create_app('flask_test.cfg')
+import backend.project as project
+
+flask_app = project.create_app('flask_test.cfg')
 
 def test_homepage():
      with flask_app.test_client() as test_client:
