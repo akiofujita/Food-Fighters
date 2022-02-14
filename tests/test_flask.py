@@ -1,7 +1,7 @@
 """ Tests flask functionality """
-from .. import backend
+from backend import project
 
-flask_app = backend.project.create_app('flask_test.cfg')
+flask_app = project.create_app('flask_test.cfg')
 
 def test_homepage():
   """

@@ -14,7 +14,6 @@ def addrecipe():
   """ Explanation goes here. """
   return flask.render_template("/recipes.html")
 
-
 @api.route("/submitrecipe", methods = ['POST'])
 def submitrecipe():
   """ Explanation goes here. """
