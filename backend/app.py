@@ -1,11 +1,12 @@
 import sqlite3
 import flask
 
+""" Explanation goes here. """
 api = flask.Flask(__name__)
 
 @api.route("/")
 def hello_world():
-  """ Explanation goes here. """
+  
   return "<h1>Homepage</h1>"
 
 @api.route("/addrecipe")

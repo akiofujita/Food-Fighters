@@ -1,10 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
-from backend import app
+import backend.app as app
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
 # to the application at this point.
 
+""" Explanation goes here. """
 db = SQLAlchemy()
 # login = LoginManager()
 # login.login_view = "users.login"
