@@ -1,6 +1,6 @@
-from flask import Flask
+from flask
 from flask_sqlalchemy import SQLAlchemy
-
+import app
 #######################
 #### Configuration ####
 #######################
