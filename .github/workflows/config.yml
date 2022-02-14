@@ -31,4 +31,4 @@ jobs:
           python3 tests/test_exist.py
       - name: TestFlask
         run: |
-          pytest -v tests/unit/test_flask.py
+          pytest -v tests/test_flask.py
