@@ -1,5 +1,12 @@
 import flask
 from flask_sqlalchemy import SQLAlchemy
+
+import sys 
+
+sys.path.append('.')
+
+import app
+
 #######################
 #### Configuration ####
 #######################
@@ -17,6 +24,6 @@ db = SQLAlchemy()
 ######################################
 
 def create_app(config_filename=None):
-    test = flask.Flask(__name__)
+    test = app.api
     test.config.from_pyfile(config_filename)
     return test
