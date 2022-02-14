@@ -1,11 +1,11 @@
+""" Project.py contains methods for building the app instance """
 from flask_sqlalchemy import SQLAlchemy
-import backend.app as app
+import app
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
 # to the application at this point.
 
-""" Explanation goes here. """
 db = SQLAlchemy()
 # login = LoginManager()
 # login.login_view = "users.login"

@@ -1,4 +1,7 @@
+""" Conftest.py helps configure the flask app """
+import sys
 import pytest
+sys.append('.')
 import backend.project as project
 
 @pytest.fixture()
