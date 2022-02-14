@@ -1,6 +1,6 @@
 """ Conftest.py helps configure the flask app """
 import pytest
-from backend import project
+from backend.project import project
 
 @pytest.fixture()
 def test_client():
