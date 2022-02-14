@@ -32,3 +32,6 @@ jobs:
       - name: TestFlask
         run: |
           pytest -v tests/test_flask.py
+      - name: Code Coverage
+        run: |
+          pytest --cov-report term --cov=Food-Fighters tests/
