@@ -8,9 +8,9 @@ from flask import Flask
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
 # to the application at this point.
-db = SQLAlchemy()
-login = LoginManager()
-login.login_view = "users.login"
+# db = SQLAlchemy()
+# login = LoginManager()
+# login.login_view = "users.login"
 
 
 ######################################
