@@ -1,11 +1,11 @@
 import pytest
 import sys
 import json
-sys.path.append('.')
+from backend.project import create_app
 
-import backend.app as app
+flask_app = create_app('flask_test.cfg')
 
 def test_homepage():
-    response = app.get('/')
-    assert response.status_code == 200
-    assert "<h1>Homepage</h1>" in response.data
+     with flask_app.test_client() as test_client:
+        response = test_client.get('/')
+        assert response.status_code == 200
