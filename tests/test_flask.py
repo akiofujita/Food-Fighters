@@ -1,16 +1,12 @@
-import unittest
-import requests
-import json
+import pytest
 import sys
-
+import json
 sys.path.append('.')
 
 import backend.app as app
 
-class TestHelloWorld(unittest.TestCase):
-    def test_hello_world(self):
-        response = self.get('/')
-        self.assertEqual(response, "<h1>Homepage</h1>")
-
-if __name__ == "__main__":
-    unittest.main()
+def test_homepage():
+    with app.test_client() as test_client:
+        response = test_client.get('/')
+        assert response.status_code == 200
+        assert "<h1>Homepage</h1>" in response.data
