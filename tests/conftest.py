@@ -1,9 +1,13 @@
 import pytest
-from backend.project import create_app
+import sys 
+
+sys.path.append('.')
+
+import backend.project as project
 
 @pytest.fixture()
 def app():
-    app = create_app()
+    app = project.create_app()
     app.config.update({
         "TESTING": True,
     })
