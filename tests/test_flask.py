@@ -1,7 +1,9 @@
 """ Tests flask functionality """
-from backend.project import project
+import sys
+sys.path.append('.')
+from backend.project import create_app
 
-flask_app = project.create_app('flask_test.cfg')
+flask_app = create_app('flask_test.cfg')
 
 def test_homepage():
   """
