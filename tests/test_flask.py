@@ -5,7 +5,7 @@ sys.path.append('.')
 
 import backend.project as project
 
-flask_app = project.create_app('flask_test.cfg')
+flask_app = project.create_app('./tests/flask_test.cfg')
 
 def test_homepage():
      with flask_app.test_client() as test_client:
