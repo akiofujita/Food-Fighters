@@ -1,7 +1,5 @@
 """ Tests flask functionality """
-import sys
-from backend.project import create_app
-sys.path.append('.')
+from ..backend.project import create_app
 
 flask_app = create_app('flask_test.cfg')
 
