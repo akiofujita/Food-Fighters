@@ -1,6 +1,6 @@
 """ Project.py contains methods for building the app instance """
 from flask_sqlalchemy import SQLAlchemy
-import app
+from backend.app import api
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
@@ -12,6 +12,6 @@ db = SQLAlchemy()
 
 def create_app(config_filename=None):
   """ Factory building function that creates an instance of an app """
-  test = app.api
+  test = api
   test.config.from_pyfile(config_filename)
   return test
