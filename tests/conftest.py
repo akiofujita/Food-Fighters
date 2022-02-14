@@ -1,10 +1,13 @@
+import sys
 import pytest
-import sys 
+from backend import project
 
-sys.path.append('.')
 
-import backend.project as project
 
+"""
+Pytest fixture that sets up a dummy client under the flask_test configurations. 
+Establishes a connection with the application for testing Flask functionality.
+"""
 @pytest.fixture()
 def test_client():
     flask_app = project.create_app('flask_test.cfg')
