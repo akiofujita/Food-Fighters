@@ -34,4 +34,4 @@ jobs:
           pytest -v tests/test_flask.py
       - name: Code Coverage
         run: |
-          pytest --cov=app.py tests/
+          pytest --cov tests/
