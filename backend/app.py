@@ -26,3 +26,20 @@ def submitrecipe():
     conn.close()
 
     return flask.redirect("/")
+
+@api.route("/display")
+def display():
+  """ 
+  Test display function. Grabs recipe name from database
+  and send to React for display on UI.
+  """
+  conn = sqlite3.connect('data\recipes.db')
+  cursor = conn.cursor()
+
+  recipe_id = 3   # Hardcoded to select eggnog recipe
+  cursor.execute(f'''SELECT * from recipes WHERE recipe_id = {recipe_id}''')
+
+  name = cursor.fetchall()[0][1]
+  
+  conn.close()
+  return {"recipe_name": name}

@@ -2,7 +2,7 @@ import './App.css';
 import NavBar from './pages/NavBar';
 import Footer from './pages/Footer';
 import HomePage from './pages/home/HomePage'
-import SavedPage from './pages/saved/SavedPage'
+import RecipePage from './pages/recipe/RecipePage'
 import AboutPage from './pages/about/AboutPage'
 import ContactPage from './pages/contact/ContactPage'
 import AccountPage from './pages/account/AccountPage'
@@ -25,7 +25,7 @@ export default function App() {
 
       <Routes>
         <Route exact path='/'   element={<HomePage/>} />
-        <Route path='/Saved'    element={<SavedPage/>} />
+        <Route path='/Recipe'   element={<RecipePage/>} />
         <Route path='/AboutUs'  element={<AboutPage/>} />
         <Route path='/Contact'  element={<ContactPage/>} />
         <Route path='/Account'  element={<AccountPage/>} />
