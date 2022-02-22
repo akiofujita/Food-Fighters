@@ -26,9 +26,8 @@ export default function RecipePage() {
   return (
     <div className='recipePage'>
       <h2>Recipe Page</h2>
-      <div className='break'/>
 
-      <p>Get Recipe </p><button onClick={getData}>Click me</button>
+      <p>Get Recipe</p><button onClick={getData}>Click me</button>
       {recipe && <div>
           <p>Fetched Recipe: {recipe.recipe_name}</p>
         </div>

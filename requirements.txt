@@ -1,0 +1,5 @@
+Flask
+Flask-SQLAlchemy
+pytest-cov
+SQLAlchemy
+requests
