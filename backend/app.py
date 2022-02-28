@@ -29,7 +29,7 @@ def submitrecipe():
   conn.commit()
   conn.close()
 
-  return flask.redirect("/")
+  return flask.redirect("http://localhost:3000/Recipe")
 
 @api.route("/display", methods = ['GET'])
 def display():
@@ -53,7 +53,6 @@ def display():
   name = recipes[0][1]
   
   conn.close()
-  print(data)
   return {'recipe_name': name}
 
 def sort_by_time(recipes):

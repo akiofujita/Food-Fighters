@@ -1,0 +1,42 @@
+form {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 20vw;
+}
+
+input {
+  font-size: 14px;
+  width: 25vw;
+  padding: 10px 10px 10px 10px;
+  margin: 4px 4px 4px 4px;
+}
+
+textarea {
+  font: inherit;
+  font-size: 14px;
+
+  min-height: 125px;
+  width: 25vw;
+
+  padding: 10px 10px 10px 10px;
+  margin: 4px 4px 4px 4px;
+
+  resize: none;
+}
+
+#submitBtn {
+  background-color: white;
+  color: black;
+  border: solid black;
+  border-radius: 0.5vw;
+
+  /* padding: 10px 16px; */
+  width: 10vw;
+
+  text-align: center;
+  font-size: 16px;
+}
