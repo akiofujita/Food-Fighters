@@ -33,11 +33,11 @@ export default function NavBar() {
           >Recipes</button>
         </Link>
 
-        <Link to='/AboutUs'>
+        <Link to='/List'>
           <button 
-              className={`btn navBtn ${active === 'About Us' ? 'activeBtn' : ''}`}
-              onClick={() => setActive('About Us')}
-          >About Us</button>
+              className={`btn navBtn ${active === 'List' ? 'activeBtn' : ''}`}
+              onClick={() => setActive('List')}
+          >List</button>
         </Link>
 
         <Link to='/Contact'>
