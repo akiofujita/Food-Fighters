@@ -6,9 +6,8 @@ export default function ContactPage() {
     <div className='contactPage'>
       <div id='contactHeader'>
         <h1>Contact Us</h1>
-        <h4>Contact us at chen2776@purdue.edu or send us a message below!</h4>
+        <h4>Contact us at chen2776@purdue.edu!</h4>
       </div>
-
     </div>
   );
 };

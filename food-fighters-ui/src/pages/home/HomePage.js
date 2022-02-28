@@ -7,7 +7,6 @@ export default function HomePage() {
       <div id='homeHeader'>
         <h1>Food Fighters</h1>
       </div>
-    
     </div>
   );
 };

@@ -22,8 +22,8 @@ def submitrecipe():
 
   recipe_name = flask.request.form['recipe_name']
   ingredients = flask.request.form['ingredients']
-  steps = flask.request.form['steps']
   time = flask.request.form['prep_time']
+  steps = flask.request.form['steps']
 
   cursor.execute(f'''INSERT INTO recipes (recipe_name, ingredients, prep_time, steps, poster_id) \
                   VALUES("{recipe_name}", "{ingredients}", {time}, "{steps}", {-1})''')
