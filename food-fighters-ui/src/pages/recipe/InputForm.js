@@ -5,18 +5,20 @@ class InputForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value_recipe_name: "",
-      value_ingredients: "",
-      value_steps: ""
+      val_recipe_name: "",
+      val_ingredients: "",
+      val_prep_time:   "",
+      val_steps:       ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({
-      value_recipe_name: event.target.value_recipe_name,
-      value_ingredients: event.target.value_ingredients,
-      value_steps: event.target.value_steps
+      val_recipe_name: event.target.val_recipe_name,
+      val_ingredients: event.target.val_ingredients,
+      val_prep_time:   event.target.val_prep_time,
+      val_steps:       event.target.val_steps
     });
   }
 
@@ -29,7 +31,7 @@ class InputForm extends React.Component {
             id="recipe_name"
             name="recipe_name"
             placeholder='Recipe Name'
-            value={this.state.value_recipe_name}
+            value={this.state.val_recipe_name}
             onChange={this.handleChange}
             required
             />
@@ -38,7 +40,16 @@ class InputForm extends React.Component {
             id="ingredients"
             name="ingredients"
             placeholder='Ingredients'
-            value={this.state.value_ingredients}
+            value={this.state.val_ingredients}
+            onChange={this.handleChange}
+            required
+            />
+          <input
+            type="text"
+            id="prep_time"
+            name="prep_time"
+            placeholder='Prep Time'
+            value={this.state.val_prep_time}
             onChange={this.handleChange}
             required
             />
@@ -47,7 +58,7 @@ class InputForm extends React.Component {
             type='text'
             name='steps'
             placeholder='Steps'
-            value={this.state.steps}
+            value={this.state.val_steps}
             onChange={this.handleChange}
           />
           <input

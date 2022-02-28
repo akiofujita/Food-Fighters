@@ -24,6 +24,8 @@ textarea {
 
   padding: 10px 10px 10px 10px;
   margin: 4px 4px 4px 4px;
+
+  resize: none;
 }
 
 #submitBtn {
