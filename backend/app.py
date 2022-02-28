@@ -5,8 +5,8 @@ import flask
 api = flask.Flask(__name__)
 
 @api.route("/")
-def hello_world():
-  """ Explanation goes here. """
+def landing():
+  """ Landing API, probably deprecated/uncessary """
   return "<h1>Homepage</h1>"
 
 @api.route("/addrecipe")
@@ -34,16 +34,32 @@ def submitrecipe():
 @api.route("/display", methods = ['GET'])
 def display():
   """ 
-  Test display funciton. Grabs recipe name from database
+  Test display function. Grabs all recipes from database
   and send to React for display on UI.
   """
   conn = sqlite3.connect('data/recipes.db')
   cursor = conn.cursor()
+  
+  columns = 'recipe_id, recipe_name, prep_time'
+  cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
-  recipe_id = 3   # Hardcoded to select eggnog recipe
-  cursor.execute(f'''SELECT * from recipes WHERE recipe_id = {recipe_id}''')
+  data = cursor.fetchall()
+  recipes = sort_by_time(data)
 
-  name = cursor.fetchall()[0][1]
+  # Choose recipe with longest prep time
+  # name = recipes[-1][1]
+
+  # Choose recipe with shortest prep time
+  name = recipes[0][1]
   
   conn.close()
+  print(data)
   return {'recipe_name': name}
+
+def sort_by_time(recipes):
+  """
+  Sorts a list of elements formatted as (recipe_id, recipe_name, prep_time)
+  by prep_time.
+  """
+  sorted_recipes = sorted(recipes, key = lambda x: x[2]) # Sorts by third element of tuple
+  return sorted_recipes

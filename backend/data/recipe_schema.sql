@@ -17,6 +17,13 @@ CREATE TABLE IF NOT EXISTS recipes (
 -- Example entries for testing API
 INSERT INTO recipes (recipe_name, ingredients, prep_time, steps, poster_id)
 VALUES
+( "Fried Rice Restaurant Style",
+  "2 cups enriched white rice, 4 cups water, 2/3 cup chopped baby carrots, 1/2 cup frozen green peas, 2 tablespoons vegetable oil, 2 eggs, soy sauce (to taste), 2 tablespoons sesame oil (to taste)",
+  45,
+  "1. In a saucepan, combine rice and water. Bring to a boil. Reduce heat, cover, and simmer for 20 minutes.
+  2. In a small saucepan, boil carrots in water about 3 to 5 minutes. Drop peas into boiling water, and drain.
+  3. Heat wok over high heat. Pour in oil, then stir in carrots and peas; cook about 30 seconds. Crack in eggs, stirring quickly to scramble eggs with vegetables. Stir in cooked rice. Shake in soy sauce, and toss rice to coat. Drizzle with sesame oil, and toss again.",
+  -1 ),
 ( "Homemade Eggnog",
   "6 large egg yolks, 1/2 cup granulated sugar, 1 cup heavy whipping cream, 2 cups milk, 1/2 teaspoon ground nutmeg, pinch of salt, 1/4 teaspoon vanilla extract, ground cinnamon (for topping), alcohol (optional)",
    25,
@@ -31,13 +38,6 @@ VALUES
     9. Serve with a sprinkle of cinnamon or nutmeg, and fresh whipped cream, if desired.
     10. Store homemade eggnog in the fridge for up to one week.",
     -1 ),
-( "Fried Rice Restaurant Style",
-  "2 cups enriched white rice, 4 cups water, 2/3 cup chopped baby carrots, 1/2 cup frozen green peas, 2 tablespoons vegetable oil, 2 eggs, soy sauce (to taste), 2 tablespoons sesame oil (to taste)",
-  45,
-  "1. In a saucepan, combine rice and water. Bring to a boil. Reduce heat, cover, and simmer for 20 minutes.
-  2. In a small saucepan, boil carrots in water about 3 to 5 minutes. Drop peas into boiling water, and drain.
-  3. Heat wok over high heat. Pour in oil, then stir in carrots and peas; cook about 30 seconds. Crack in eggs, stirring quickly to scramble eggs with vegetables. Stir in cooked rice. Shake in soy sauce, and toss rice to coat. Drizzle with sesame oil, and toss again.",
-  -1 ),
 ( "3am Chicken",
   "1 shallot or small onion, 2 stalks green onion, 3 garlic cloves (or to preference), 1 tbsp cumin, 1 tbsp coriander, 1 tbsp Szechuan pepper, 2-3 tbsp five spice powder, 1 tbsp smoked paprika (to taste), 1/4 cup all purpose flour",
   60,
