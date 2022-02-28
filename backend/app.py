@@ -29,7 +29,7 @@ def submitrecipe():
   conn.commit()
   conn.close()
 
-  return flask.redirect("/")
+  return flask.redirect("http://localhost:3000/Recipe")
 
 @api.route("/display", methods = ['GET'])
 def display():
