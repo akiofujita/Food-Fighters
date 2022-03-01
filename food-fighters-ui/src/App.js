@@ -25,7 +25,7 @@ export default function App() {
 
       <Routes>
         <Route exact path='/'   element={<HomePage/>} />
-        <Route path='/Recipe'   element={<RecipePage/>} />
+        <Route path='/Add'      element={<RecipePage/>} />
         <Route path='/List'     element={<ListPage/>} />
         <Route path='/Contact'  element={<ContactPage/>} />
         <Route path='/Account'  element={<AccountPage/>} />
