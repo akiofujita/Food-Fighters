@@ -34,13 +34,13 @@ def submitrecipe():
 
 @api.route("/display", methods = ['GET'])
 def display():
-  """ 
+  """
   Test display function. Grabs all recipes from database
   and send to React for display on UI.
   """
   conn = sqlite3.connect('data/recipes.db')
   cursor = conn.cursor()
-  
+
   columns = 'recipe_id, recipe_name, prep_time'
   cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
@@ -52,7 +52,7 @@ def display():
 
   # Choose recipe with shortest prep time
   name = recipes[0][1]
-  
+
   conn.close()
   return {'recipe_name': name}
 
