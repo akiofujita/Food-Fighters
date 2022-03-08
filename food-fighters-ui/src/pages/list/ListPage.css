@@ -1,7 +1,6 @@
-.recipePage {
+.listPage {
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
 }

@@ -48,7 +48,7 @@ class InputForm extends React.Component {
             type="text"
             id="prep_time"
             name="prep_time"
-            placeholder='Prep Time'
+            placeholder='Prep Time (in minutes)'
             value={this.state.val_prep_time}
             onChange={this.handleChange}
             required

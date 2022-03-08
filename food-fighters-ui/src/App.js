@@ -3,7 +3,7 @@ import NavBar from './pages/NavBar';
 import Footer from './pages/Footer';
 import HomePage from './pages/home/HomePage'
 import RecipePage from './pages/recipe/RecipePage'
-import AboutPage from './pages/about/AboutPage'
+import ListPage from './pages/list/ListPage'
 import ContactPage from './pages/contact/ContactPage'
 import AccountPage from './pages/account/AccountPage'
 
@@ -25,8 +25,8 @@ export default function App() {
 
       <Routes>
         <Route exact path='/'   element={<HomePage/>} />
-        <Route path='/Recipe'   element={<RecipePage/>} />
-        <Route path='/AboutUs'  element={<AboutPage/>} />
+        <Route path='/Add'      element={<RecipePage/>} />
+        <Route path='/List'     element={<ListPage/>} />
         <Route path='/Contact'  element={<ContactPage/>} />
         <Route path='/Account'  element={<AccountPage/>} />
       </Routes>
