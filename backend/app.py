@@ -116,3 +116,9 @@ def displaycards():
     'num_recipes': numRecipes,
     'recipes': recipes
   }
+
+def main():
+  api.run()
+
+if __name__ == '__main__':
+  main()

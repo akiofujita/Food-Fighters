@@ -1,0 +1,2 @@
+include backend/*.txt
+include backend/data/*
