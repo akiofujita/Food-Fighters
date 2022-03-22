@@ -1,9 +1,10 @@
-.recipeCardList {
+.cards {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 
   justify-content: center;
   align-items: center;
-
-  /* width: 20vw; */
+  overflow: auto;
+  max-height: 50%;
 }

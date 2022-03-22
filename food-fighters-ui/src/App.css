@@ -1,3 +1,13 @@
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  flex-grow: 1;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
 }

@@ -102,14 +102,9 @@ def displaycards():
   cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
   recipes = cursor.fetchall()
-  # recipes = sort_by_time(data)
-
-  # Choose recipe with longest prep time
-  # name = recipes[-1][1]
-
-  # Choose recipe with shortest prep time
   numRecipes = len(recipes)
-  print(recipes)
+  # print(recipes)
+  # print(numRecipes)
   
   conn.close()
   return {

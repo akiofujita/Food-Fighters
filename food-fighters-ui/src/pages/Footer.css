@@ -1,13 +1,9 @@
 .footer {
-  background-color: green;
+  background-color: #43af2a;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: .1vh;
-  width:100%;
-  position:absolute;
-  bottom:0vh;
 }
 
 .socialLogo {

@@ -31,6 +31,8 @@ export default function App() {
         <Route path='/Account'  element={<AccountPage/>} />
       </Routes>
       
+      <div className="container"></div>
+
       <Footer/>
       </div>
     </Router>
