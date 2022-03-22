@@ -1,3 +1,8 @@
 .venv
 backend/__pycache__
 backend/env/
+backend/food_fighters.egg-info/
+build/
+dist/
+food_fighters.egg-info/
+virtualenv/
