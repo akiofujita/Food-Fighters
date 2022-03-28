@@ -1,7 +1,7 @@
 Welcome to Food Fighters's documentation!
 ===================================
 
-**Food Fighters** (/lu'make/) is a Python library for cooks and food lovers
+**Food Fighters** is a Python library for cooks and food lovers
 that will provide recipes based on the ingredients you input.
 It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
 and offers a *simple* and *intuitive* API.

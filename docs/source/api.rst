@@ -4,4 +4,4 @@ API
 .. autosummary::
    :toctree: generated
 
-   lumache
+   <!-- Kevin and Akio please insert stuff here for respective API things -->
