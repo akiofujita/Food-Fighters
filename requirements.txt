@@ -1,6 +1,6 @@
 flake8
 Flask
-Flask-restplus
+flask-restx
 Flask-SQLAlchemy
 pylint
 pytest
