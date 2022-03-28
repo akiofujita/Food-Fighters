@@ -1,7 +1,7 @@
 Welcome to Food Fighters's documentation!
 ===================================
 
-**Food Fighters** is a Flask-based web application that allows users to filter through a database of '_
+**Food Fighters** is a Flask-based web application that allows users to filter through a database of
 recipes based on the ingredients users input.
 The database is populated using an open source recipe scraper from various websites such as Food Network.
 
