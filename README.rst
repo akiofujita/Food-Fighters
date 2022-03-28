@@ -4,10 +4,6 @@ Food Fighters
 .. image:: https://img.shields.io/pypi/v/food-fighters.svg?
     :target: https://pypi.org/project/food-fighters/0.3.13/
     :alt: Version
-.. image:: https://github.com/shaqattack13/food-fighters/workflows/unittests/badge.svg?branch=development
-    :target: https://github.com/shaqattack13/food-fighters/actions/
-    :alt: GitHub Actions Unittests
-
 ------
 
 Project Description
@@ -48,6 +44,7 @@ Inspiration
 The idea for this project came from wanting a more efficient way to brainstorm recipe ideas under a certain time limit and to search via ingredients to use produce more sustainably. SuperCook contains many of the features we hope to implement.
 
 <https://www.supercook.com/>
-- Add/remove ingredients (for storage/search)
-- Queries websites with the ingredients to search for recipes
-- Allows users to keep track of favorite recipes and shopping list
+
+    - Add/remove ingredients (for storage/search)
+    - Queries websites with the ingredients to search for recipes
+    - Allows users to keep track of favorite recipes and shopping list
