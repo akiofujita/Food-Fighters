@@ -1,10 +1,9 @@
 Welcome to Food Fighters's documentation!
 ===================================
 
-**Food Fighters** is a Python library for cooks and food lovers
-that will provide recipes based on the ingredients you input.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**Food Fighters** is a Flask-based web application that allows users to filter through a database of '_
+recipes based on the ingredients users input.
+The database is populated using an open source recipe scraper from various websites such as Food Network.
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.

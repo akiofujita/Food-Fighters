@@ -6,29 +6,20 @@ Usage
 Installation
 ------------
 
-To use Lumache, first install it using pip:
+To use Food-Fighters, first install the API endpoints using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install
+   (.venv) $ pip install food-fighters==0.3.13
 
-Creating recipes
+Then install the UI using npm:
+
+.. code-block:: console
+
+   (.venv) $ npm i food-fighters-ui
+
+Obtaining recipes
 ----------------
 
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
-
-.. autofunction:: lumache.get_random_ingredients
-
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
-
-.. autoexception:: lumache.InvalidKindError
-
-For example:
-
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
+Food Fighters will be using an open source recipe scraper to load in recipe data, which is then kept and refreshed in a database server. The documentation can be found at <https://pypi.org/project/recipe-scrapers/>.
 
