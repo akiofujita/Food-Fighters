@@ -6,3 +6,4 @@ build/
 dist/
 food_fighters.egg-info/
 virtualenv/
+.vscode
