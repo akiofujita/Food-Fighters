@@ -23,6 +23,8 @@ This web application uses a Flask framework to connect our services together alo
 
 A database server run via mySQL will contain recipes for users to access, and will be populated using an open-source recipe scraper.
 
+More about how to work on these components can be found at https://food-fighters.readthedocs.io/en/latest/
+
 
 Development Roadmap
 ------------------------------------------
