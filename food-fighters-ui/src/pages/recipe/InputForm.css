@@ -1,4 +1,14 @@
-form {
+.recipeForm {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 50vw;
+}
+
+/* form {
   display: flex;
   flex-direction: column;
 
@@ -38,4 +48,4 @@ textarea {
 
   text-align: center;
   font-size: 16px;
-}
+} */
