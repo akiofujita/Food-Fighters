@@ -24,20 +24,32 @@ class addRecipe(Resource):
 class submitRecipe(Resource):
   def post(self):
     """ API for submitting a recipe to the database. """
-    conn = sqlite3.connect('data/recipes.db')
-    cursor = conn.cursor()
+    try:
+      conn = sqlite3.connect('data/recipes.db')
+      cursor = conn.cursor()
 
-    recipe_name = flask.request.form['recipe_name']
-    ingredients = flask.request.form['ingredients']
-    time = flask.request.form['prep_time']
-    steps = flask.request.form['steps']
+      form = flask.request.form
+      jsonData = form.get_json()
+      print("Printing request form")
+      print(form)
+      print("End form")
+      
+      recipe_name = form[1]
+      print(recipe_name)
+      recipe_desc = flask.request.form['recipe_desc']
+      time = flask.request.form['prep_time']
+      steps = flask.request.form['steps']
 
-    cursor.execute(f'''INSERT INTO recipes (recipe_name, ingredients, prep_time, steps, poster_id) \
-                    VALUES("{recipe_name}", "{ingredients}", {time}, "{steps}", {-1})''')
-    conn.commit()
-    conn.close()
+      cursor.execute(f'''INSERT INTO recipes (recipe_name, ingredients, prep_time, steps, poster_id) \
+                      VALUES("{recipe_name}", "{ingredients}", {time}, "{steps}", {-1})''')
+      conn.commit()
+      conn.close()
 
-    return flask.redirect("http://localhost:3000/Add")
+      return flask.redirect("http://localhost:3000/Add")
+
+    except Exception as e:
+      print(e)
+      return flask.redirect("http://localhost:3000")
 
 @api.route("/display", endpoint="display")
 @api.deprecated
