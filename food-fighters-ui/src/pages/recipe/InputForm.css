@@ -1,5 +1,4 @@
 .recipeForm {
-  /* background-color: blue; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,8 +21,6 @@
   flex-wrap: wrap;
   overflow: auto;
 
-  /* border-style: solid;
-  border-width: 1px; */
   margin: 0 vw 0vw 1vw 0vw;
   width: 95%;
 }
@@ -41,62 +38,3 @@
 #submitBtn {
   margin: 1.5vw 0vw 1vw 0vw;
 }
-
-/* component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '95%' },
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        overflow: 'auto',
-        border: 1,
-        borderRadius: '2vw',
-        margin: 3,
-        minWidth: "60vw"
-      }}
-      noValidate
-      autoComplete="off" */
-
-/* form {
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 20vw;
-}
-
-input {
-  font-size: 14px;
-  width: 25vw;
-  padding: 10px 10px 10px 10px;
-  margin: 4px 4px 4px 4px;
-}
-
-textarea {
-  font: inherit;
-  font-size: 14px;
-
-  min-height: 125px;
-  width: 25vw;
-
-  padding: 10px 10px 10px 10px;
-  margin: 4px 4px 4px 4px;
-
-  resize: none;
-}
-
-#submitBtn {
-  background-color: white;
-  color: black;
-  border: solid black;
-  border-radius: 0.5vw;
-
-  width: 10vw;
-
-  text-align: center;
-  font-size: 16px;
-} */

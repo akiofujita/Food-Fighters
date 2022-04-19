@@ -6,6 +6,15 @@ from flask_restx import Resource, Api
 app = flask.Flask(__name__)
 api = Api(app)
 
+unitsMap = {
+  'met-0': 'grams',
+  'imp-0': 'tbsp',
+  'misc-0': 'pinch'
+}
+
+def convertUnits(idList):
+  return [unitsMap[id] for id in idList]
+
 @api.route("/")
 @api.deprecated
 class Index(Resource):
@@ -29,23 +38,37 @@ class submitRecipe(Resource):
       cursor = conn.cursor()
 
       form = flask.request.form
-      jsonData = form.get_json()
-      print("Printing request form")
-      print(form)
-      print("End form")
-      
-      recipe_name = form[1]
-      print(recipe_name)
-      recipe_desc = flask.request.form['recipe_desc']
-      time = flask.request.form['prep_time']
-      steps = flask.request.form['steps']
+      recipe_title = form.getlist('recipe_title')[0]
+      recipe_desc = form.getlist('recipe_desc')[0]
+      total_time = form.getlist('total_time')[0]
+      ing_names = form.getlist('ing_name')
+      ing_quants = form.getlist('ing_quant')
+      ing_units = convertUnits(form.getlist('ing_units'))
+      steps = form.getlist('steps')
 
-      cursor.execute(f'''INSERT INTO recipes (recipe_name, ingredients, prep_time, steps, poster_id) \
-                      VALUES("{recipe_name}", "{ingredients}", {time}, "{steps}", {-1})''')
+      if (len(ing_names) != len(ing_quants) or len(ing_names) != len(ing_units) or len(ing_quants) != len(ing_units)):
+        raise LengthError
+      
+      ingredients = []
+      for i in range(len(ing_names)):
+        ingredients.append((ing_names[i], ing_quants[i], ing_units[i]))
+
+      print('Recipe Title: ' + recipe_title)
+      print('Recipe Desc : ' + recipe_desc)
+      print('Total Time  : ' + total_time)
+      print('Ingredients : ')
+      print(ingredients)
+      print('Steps       : ')
+      print(steps)
+
       conn.commit()
       conn.close()
 
       return flask.redirect("http://localhost:3000/Add")
+    
+    except LengthError:
+      print("Ingredient List Length Error")
+      return flask.redirect("http://localhost:3000")
 
     except Exception as e:
       print(e)

@@ -1,4 +1,3 @@
-import './IngredientForm.css';
 import React, {useState} from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,7 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
 import {ThemeProvider} from '@mui/material/styles';
-import {theme} from './ColorTheme'
+import {theme} from './ColorTheme';
+import './IngredientForm.css';
 
 const units = [
   {
@@ -25,9 +25,9 @@ const units = [
 
 export default function IngredientForm() {
   const [inputList, setInputList] = useState([{
-    ing_name: "",
-    ing_quant: "",
-    ing_units: ""
+    ing_name: '',
+    ing_quant: '',
+    ing_units: ''
   }]);
 
   // handle input change
@@ -55,39 +55,39 @@ export default function IngredientForm() {
   };
 
   return (
-    <div className="ingredientForm">
+    <div className='ingredientForm'>
       <h3>Ingredient Details</h3>
-      <div className="ingredientList">
+      <div className='ingredientList'>
         {inputList.map((values, i) => {
           return (
-            <div className="ingredientItem">
-              <div className="ingredientField">
+            <div className='ingredientItem'>
+              <div className='ingredientField'>
                 <TextField
                   required
-                  name="ing_name"
-                  label="Name"
-                  value={values ? values.ing_name : ""}
+                  name='ing_name'
+                  label='Name'
+                  value={values ? values.ing_name : ''}
                   onChange={e => handleInputChange(e, i)}
-                  id="ing_name"
+                  id='ing_name'
                   sx={{ width: '50%' }}
                 />
                 <TextField
                   required
                   name='ing_quant'
-                  label="Quantity"
-                  value={values ? values.ing_quant : ""}
+                  label='Quantity'
+                  value={values ? values.ing_quant : ''}
                   onChange={e => handleInputChange(e, i)}
-                  id="ing_quant"
+                  id='ing_quant'
                   sx={{ width: '23%' }}
                 />
                 <TextField
                   required
                   select
                   name='ing_units'
-                  label="Units"
-                  value={values ? values.ing_units : ""}
+                  label='Units'
+                  value={values ? values.ing_units : ''}
                   onChange={e => handleInputChange(e, i)}
-                  id="ing_units"
+                  id='ing_units'
                   sx={{ width: '23%' }}
                 >
                   {units.map((option) => (
@@ -97,26 +97,26 @@ export default function IngredientForm() {
                   ))}
                 </TextField>
               </div>
-              <div className="removeBtn">
+              <div className='removeBtn'>
                 {inputList.length !== 1 &&
                   <ThemeProvider theme={theme}>
                     <IconButton
-                      color="secondary"
+                      color='secondary'
                       onClick={() => handleRemoveClick(i)}
-                      aria-label="Remove Ingredient"
+                      aria-label='Remove Ingredient'
                     >
                       <RemoveIcon />
                     </IconButton>
                   </ThemeProvider>
                 }
               </div>
-              <div className="addBtn">
+              <div className='addBtn'>
                 {inputList.length - 1 === i &&
                   <ThemeProvider theme={theme}>
                     <IconButton
-                      color="primary"
+                      color='primary'
                       onClick={handleAddClick}
-                      aria-label="Add Ingredient">
+                      aria-label='Add Ingredient' >
                       <AddIcon />
                     </IconButton>
                   </ThemeProvider>
@@ -126,7 +126,6 @@ export default function IngredientForm() {
           );
         })}
       </div>
-      {/* <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div> */}
     </div>
   );
 }
