@@ -1,6 +1,8 @@
 from fileinput import filename
 from recipe_scrapers import scrape_me
+import MySQLdb
 import csv 
+import sys
 
 # give the url as a string, it can be url from any site listed below
 scraper = scrape_me('https://www.allrecipes.com/recipe/158968/spinach-and-feta-turkey-burgers/')
@@ -20,7 +22,7 @@ print(type(scraper.instructions()))
 units = 'ounces pounds gallons quarts pints cups tablespoons teaspoons fluid ounces liters pinches cloves' 
 
 # Writing to csv
-recipe = ['name', 'time', 'servingSize']
+recipe = ['name', 'time', 'servingSize', 'user']
 ingredients = ['value', 'measurement','name', 'state']
 steps = ['order', 'direction']
 table_r = 'recipe.csv'
@@ -29,7 +31,7 @@ table_s = 'steps.csv'
 
 # Writing to recipe table
 serving = scraper.yields().replace('serving(s)', '')[:-1]
-rows_r = [[scraper.title(), scraper.total_time(), serving]]
+rows_r = [[scraper.title(), scraper.total_time(), serving, 1]]
 
 with open('recipe.csv', 'w') as csvfile:
     # creating a csv writer object 
@@ -103,3 +105,34 @@ with open('steps.csv', 'w') as csvfile:
     # writing the data rows 
     csvwriter.writerows(rows_s)
 
+
+# Trying csv import via python
+
+conn = MySQLdb.connect(host="127.0.0.1", user="root", password="F00D_fighters22", database="foodfighters")
+
+cursor = conn.cursor()
+csv_data = csv.reader(open('recipe.csv'))
+header = next(csv_data)
+
+print('Importing the CSV Files')
+
+# Recipe.csv first
+for row in csv_data:
+    print(row)
+    cursor.execute(
+        "INSERT INTO recipe (name,totalTime,servingSize,author) VALUES (%s, %d, %d, %d)", row)
+
+# Get RecipeID from newly generated row
+cursor.execute("SELECT RecipeID FROM foodfighters.recipe WHERE name = %s", row[0])
+
+# Steps.csv next
+
+# Ingredients.csv (goes into ingredient and quanitity) next
+# Insert ingredient
+# Get ingredientID
+# Insert quantity while reading from same row
+
+
+conn.commit()
+cursor.close()
+print('Done')
