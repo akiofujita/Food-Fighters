@@ -6,6 +6,16 @@ from flask_restx import Resource, Api
 app = flask.Flask(__name__)
 api = Api(app)
 
+def parseIngredients(ingString):
+  return ingString.split(', ')
+
+def orgRecipe(recipeList):
+  for i in range(len(recipeList)):
+    newIng = parseIngredients(recipeList[i][1])
+    newRecipe = (recipeList[i][0], newIng, recipeList[i][2])
+    recipeList[i] = newRecipe
+  return recipeList
+
 @api.route("/")
 @api.deprecated
 class Index(Resource):
@@ -114,8 +124,10 @@ class displaycards(Resource):
 
     recipes = cursor.fetchall()
     numRecipes = len(recipes)
-    # print(recipes)
-    # print(numRecipes)
+    recipes = orgRecipe(recipes)
+
+    print(recipes)
+    print(numRecipes)
     
     conn.close()
     return {
