@@ -1,41 +1,40 @@
-form {
+.recipeForm {
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
 
-  width: 20vw;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 2vw;
+  margin: 1vw 0vw 1vw 0vw;
+  min-width: 60vw;
 }
 
-input {
-  font-size: 14px;
-  width: 25vw;
-  padding: 10px 10px 10px 10px;
-  margin: 4px 4px 4px 4px;
+.recipeDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  margin: 0 vw 0vw 1vw 0vw;
+  width: 95%;
 }
 
-textarea {
-  font: inherit;
-  font-size: 14px;
-
-  min-height: 125px;
-  width: 25vw;
-
-  padding: 10px 10px 10px 10px;
-  margin: 4px 4px 4px 4px;
-
-  resize: none;
+.timeDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+  width: 95%;
 }
 
 #submitBtn {
-  background-color: white;
-  color: black;
-  border: solid black;
-  border-radius: 0.5vw;
-
-  width: 10vw;
-
-  text-align: center;
-  font-size: 16px;
+  margin: 1.5vw 0vw 1vw 0vw;
 }

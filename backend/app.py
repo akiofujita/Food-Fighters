@@ -31,6 +31,25 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
+unitsMap = {
+  'met-0': 'grams',
+  'imp-0': 'tbsp',
+  'misc-0': 'pinch'
+}
+
+def convertUnits(idList):
+  return [unitsMap[id] for id in idList]
+  
+def parseIngredients(ingString):
+  return ingString.split(', ')
+
+def orgRecipe(recipeList):
+  for i in range(len(recipeList)):
+    newIng = parseIngredients(recipeList[i][1])
+    newRecipe = (recipeList[i][0], newIng, recipeList[i][2])
+    recipeList[i] = newRecipe
+  return recipeList
+
 @api.route("/")
 @api.deprecated
 class Index(Resource):
@@ -49,20 +68,46 @@ class addRecipe(Resource):
 class submitRecipe(Resource):
   def post(self):
     """ API for submitting a recipe to the database. """
-    conn = sqlite3.connect('data/recipes.db')
-    cursor = conn.cursor()
+    try:
+      conn = sqlite3.connect('data/recipes.db')
+      cursor = conn.cursor()
 
-    recipe_name = flask.request.form['recipe_name']
-    ingredients = flask.request.form['ingredients']
-    time = flask.request.form['prep_time']
-    steps = flask.request.form['steps']
+      form = flask.request.form
+      recipe_title = form.getlist('recipe_title')[0]
+      recipe_desc = form.getlist('recipe_desc')[0]
+      total_time = form.getlist('total_time')[0]
+      ing_names = form.getlist('ing_name')
+      ing_quants = form.getlist('ing_quant')
+      ing_units = convertUnits(form.getlist('ing_units'))
+      steps = form.getlist('steps')
 
-    cursor.execute(f'''INSERT INTO recipes (recipe_name, ingredients, prep_time, steps, poster_id) \
-                    VALUES("{recipe_name}", "{ingredients}", {time}, "{steps}", {-1})''')
-    conn.commit()
-    conn.close()
+      if (len(ing_names) != len(ing_quants) or len(ing_names) != len(ing_units) or len(ing_quants) != len(ing_units)):
+        raise LengthError
+      
+      ingredients = []
+      for i in range(len(ing_names)):
+        ingredients.append((ing_names[i], ing_quants[i], ing_units[i]))
 
-    return flask.redirect("http://localhost:3000/Add")
+      print('Recipe Title: ' + recipe_title)
+      print('Recipe Desc : ' + recipe_desc)
+      print('Total Time  : ' + total_time)
+      print('Ingredients : ')
+      print(ingredients)
+      print('Steps       : ')
+      print(steps)
+
+      conn.commit()
+      conn.close()
+
+      return flask.redirect("http://localhost:3000/Add")
+    
+    except LengthError:
+      print("Ingredient List Length Error")
+      return flask.redirect("http://localhost:3000")
+
+    except Exception as e:
+      print(e)
+      return flask.redirect("http://localhost:3000")
 
 @api.route("/display", endpoint="display")
 @api.deprecated
@@ -139,8 +184,10 @@ class displaycards(Resource):
 
     recipes = cursor.fetchall()
     numRecipes = len(recipes)
-    # print(recipes)
-    # print(numRecipes)
+    recipes = orgRecipe(recipes)
+
+    print(recipes)
+    print(numRecipes)
     
     conn.close()
     return {

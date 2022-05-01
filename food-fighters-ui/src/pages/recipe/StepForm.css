@@ -1,0 +1,69 @@
+.stepsForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  margin: 1vw 0vw 1vw 0vw;
+  width: 100%;
+}
+
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  width: 95%;
+}
+
+.stepsItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  width: 100%;
+}
+
+.stepsField {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  padding-top: 0.5vw;
+  width: 90%;
+}
+
+.removeBtn2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+
+  padding-top: 0.5vw;
+  width: 8%;
+}
+
+.addBtn2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 0.5vw;
+  width: 100%;
+}
+
+.stepsNum {
+  margin: 0vw 0vw 0vw 0vw;
+}

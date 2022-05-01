@@ -1,3 +1,20 @@
 #Card {
-  margin: 0px 5px 5px 5px
+  margin: 0vw 0.5vw 1.5vw 0.5vw;
+  padding: 20px 20px 10px 20px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  margin: 0px 0px 0px 0px;
+}
+
+.container {
+  flex-grow: 1;
+}
+
+.detailsBtn {
+  margin: 0px 0px 0px 0px;
+  margin-top: auto;
 }
