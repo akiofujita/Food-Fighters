@@ -14,15 +14,15 @@ from sqlalchemy.dialects.mysql import \
 app = flask.Flask(__name__)
 api = Api(app)
 
-IP = '34.70.168.238'
+IP = '34.72.233.63'
 user = 'root'
 passwd = 'ffDB2022!'
 db = 'FoodFighters'
 # project_id = 'nth-gasket-348415'
-instance_name = 'nth-gasket-348415:us-central1:food-fighters-db'
+instance_name = 'nth-gasket-348415:us-central1:food-fighters'
 # URI = r'mysql+pymysql://'+user+r':'+passwd+r'@'+IP+r'/'+db
 URI = f'mysql+mysqldb://{user}:{passwd}@{IP}/{db}?unix_socket=/cloudsql/{instance_name}'
-print(URI)
+# print(URI)
 
 # Configuration
 app.config['SECRET_KEY'] = 'ffDB2022!'
@@ -199,8 +199,7 @@ class Recipe(db.Model):
   RecipeID = db.Column(INTEGER, unique=True, primary_key=True)
   name = db.Column(VARCHAR(45), unique=True, nullable=False)
   description = db.Column(MEDIUMTEXT)
-  prepTime = db.Column(INTEGER, nullable=False)
-  cookTime = db.Column(INTEGER, nullable=False)
+  totalTime = db.Column(INTEGER, nullable=False)
   author = db.Column(INTEGER, db.ForeignKey('user.UserID'), nullable=False)
   servingSize = db.Column(INTEGER, nullable=False)
 
@@ -213,10 +212,9 @@ class User(db.Model):
   recipes = db.relationship('Recipe', backref='recipe_author', lazy=True)
 
 def main():
-  test_recipe = Recipe.query.filter_by(name='Beef Noodle Soup').first()
-  print('test\n')
-  print(test_recipe.id)
-  # app.run()
+  # test_recipe = Recipe.query.filter_by(name='Beef Noodle Soup').first()
+  # print(test_recipe.RecipeID)
+  app.run()
 
 if __name__ == '__main__':
   main()
