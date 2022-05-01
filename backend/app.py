@@ -1,10 +1,35 @@
 """ This is the app.py module that keeps tracks of the various webapp routes """
+import email
 import sqlite3
 import flask
 from flask_restx import Resource, Api
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.mysql import \
+        BIGINT, BINARY, BIT, BLOB, BOOLEAN, CHAR, DATE, \
+        DATETIME, DECIMAL, DECIMAL, DOUBLE, ENUM, FLOAT, INTEGER, \
+        LONGBLOB, LONGTEXT, MEDIUMBLOB, MEDIUMINT, MEDIUMTEXT, NCHAR, \
+        NUMERIC, NVARCHAR, REAL, SET, SMALLINT, TEXT, TIME, TIMESTAMP, \
+        TINYBLOB, TINYINT, TINYTEXT, VARBINARY, VARCHAR, YEAR
 
 app = flask.Flask(__name__)
 api = Api(app)
+
+IP = '34.70.168.238'
+user = 'root'
+passwd = 'ffDB2022!'
+db = 'FoodFighters'
+# project_id = 'nth-gasket-348415'
+instance_name = 'nth-gasket-348415:us-central1:food-fighters-db'
+# URI = r'mysql+pymysql://'+user+r':'+passwd+r'@'+IP+r'/'+db
+URI = f'mysql+mysqldb://{user}:{passwd}@{IP}/{db}?unix_socket=/cloudsql/{instance_name}'
+print(URI)
+
+# Configuration
+app.config['SECRET_KEY'] = 'ffDB2022!'
+app.config['SQLALCHEMY_DATABASE_URI'] = URI
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+db = SQLAlchemy(app)
 
 @api.route("/")
 @api.deprecated
@@ -123,8 +148,28 @@ class displaycards(Resource):
       'recipes': recipes
     }
 
+class Recipe(db.Model):
+  RecipeID = db.Column(INTEGER, unique=True, primary_key=True)
+  name = db.Column(VARCHAR(45), unique=True, nullable=False)
+  description = db.Column(MEDIUMTEXT)
+  prepTime = db.Column(INTEGER, nullable=False)
+  cookTime = db.Column(INTEGER, nullable=False)
+  author = db.Column(INTEGER, db.ForeignKey('user.UserID'), nullable=False)
+  servingSize = db.Column(INTEGER, nullable=False)
+
+class User(db.Model):
+  UserID = db.Column(INTEGER, unique=True, primary_key=True)
+  username = db.Column(VARCHAR(16), unique=True, nullable=False)
+  email = db.Column(VARCHAR(255), unique=True, nullable=False)
+  password = db.Column(VARCHAR(32), nullable=False)
+  create_time = db.Column(TIMESTAMP, nullable=False)
+  recipes = db.relationship('Recipe', backref='recipe_author', lazy=True)
+
 def main():
-  app.run()
+  test_recipe = Recipe.query.filter_by(name='Beef Noodle Soup').first()
+  print('test\n')
+  print(test_recipe.id)
+  # app.run()
 
 if __name__ == '__main__':
   main()

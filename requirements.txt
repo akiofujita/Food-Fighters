@@ -2,6 +2,8 @@ flake8
 Flask
 flask-restx
 Flask-SQLAlchemy
+mysql-connector
+mysql-connector-python
 pylint
 pytest
 pytest-cov
