@@ -3,13 +3,11 @@ import '../../App.css';
 
 import RecipeCard from './RecipeCard';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import {ThemeProvider} from '@mui/material/styles';
 import {theme} from '../../ColorTheme';
-import {useSearchParams} from 'react-router-dom';
 
 export default function HomePage() {
   let [searchStr,  setSearchStr]  = useState("");
@@ -18,8 +16,6 @@ export default function HomePage() {
     recipeList: null
   })
   let [didSearch,  setDidSearch]  = useState(false);
-
-  const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
     const fetchData = async () => {
