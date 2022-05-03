@@ -247,14 +247,13 @@ class displaycards(Resource):
 
 # Input: List of ingredients to query
 # Output: List of recipes, quantities, and steps
-# @api.route("/searchrecipe", endpoint="searchrecipe")
-@app.route("/searchrecipe?<searchstring>")
+@api.route("/searchrecipe", endpoint="searchrecipe")
+# @app.route("/searchrecipe")
 class searchRecipe(Resource):
-  def get(self, searchstring):
+  def get(self):
     conn = sqlite3.connect('data/recipes.db')
     cursor = conn.cursor()
   
-    print("Searched: " + searchstring)
     columns = 'recipe_name, ingredients, prep_time'
     cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
@@ -262,9 +261,9 @@ class searchRecipe(Resource):
     numRecipes = len(recipes)
     recipes = orgRecipe(recipes)
 
-    print(recipes)
-    print(numRecipes)
-    
+    args = flask.request.args
+    print(args)
+        
     conn.close()
     return {
       'num_recipes': numRecipes,
