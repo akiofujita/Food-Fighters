@@ -30,8 +30,8 @@ def test_submit():
       "ing_units": "",
       "steps": "Ignore this :)",
   })
-    # If these are true, then we've successfully submitted
-    assert response.status_code == 200
+    # If these are true, then we've successfully redirected and submitted
+    assert response.status_code == 302
     
   # Check database 
   cnx = mysql.connector.connect(user='root', password='ffDB2022!', host = '34.72.233.63', database='FoodFighters')
