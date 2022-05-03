@@ -103,13 +103,13 @@ class submitRecipe(Resource):
       # Insert recipe
       # TODO: Update serving size to be based off recipe
       custom_recipe = Recipe(name=recipe_title, description=recipe_desc, \
-        totalTime=total_time, author=5, servingSize=1)
+        totalTime=total_time, author=2, servingSize=1)
       db.session.add(custom_recipe)
       db.session.commit()
 
       # Query added recipe for RecipeID
       rID = Recipe.query.filter_by(name=recipe_title, description=recipe_desc, \
-        totalTime=total_time, author=5, servingSize=1).first().RecipeID
+        totalTime=total_time, author=2, servingSize=1).first().RecipeID
 
       # Input ingredients
       for ind, ingredient in enumerate(ing_names):
@@ -124,7 +124,7 @@ class submitRecipe(Resource):
           iID = exist.IngredientID
 
         # Input quantities
-        quantModel = Quantity(RecipeId=rID, IngredientID=iID, value=ing_quants[ind], measurement=ing_units[ind])
+        quantModel = Quantity(value=ing_quants[ind], measurement=ing_units[ind], QRecipeID=int(rID), QIngredientID=int(iID))
         db.session.add(quantModel)
         db.session.commit()
 
@@ -241,7 +241,7 @@ class Recipe(db.Model):
   totalTime = db.Column(INTEGER, nullable=False)
   author = db.Column(INTEGER, db.ForeignKey('user.UserID'), nullable=False)
   servingSize = db.Column(INTEGER, nullable=False)
-  quantities = db.relationship('Quantity', backref='quantity_recipe', lazy=True)
+  quantities = db.relationship('Quantity', backref='quantity_RecipeID', lazy='joined')
 
 class User(db.Model):
   UserID = db.Column(INTEGER, unique=True, primary_key=True)
@@ -252,8 +252,8 @@ class User(db.Model):
   recipes = db.relationship('Recipe', backref='recipe_author', lazy=True)
 
 class Quantity(db.Model):
-  RecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
-  IngredientID = db.Column(INTEGER, db.ForeignKey('ingredient.IngredientID'), primary_key=True)
+  QRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
+  QIngredientID = db.Column(INTEGER, db.ForeignKey('ingredient.IngredientID'), primary_key=True)
   value = db.Column(FLOAT, nullable=False)
   measurement = db.Column(VARCHAR(45), nullable=False)
   state = db.Column(VARCHAR(45))
@@ -261,7 +261,7 @@ class Quantity(db.Model):
 class Ingredient(db.Model):
   IngredientID = db.Column(INTEGER, unique=True, primary_key=True)
   name = db.Column(VARCHAR(45), nullable=False)
-  quantities = db.relationship('Quantity', backref='quantity_ingredient', lazy=True)
+  quantities = db.relationship('Quantity', backref='quantity_IngredientID', lazy=True)
 
 
 def main():
@@ -270,6 +270,8 @@ def main():
   #   print(test_recipe.RecipeID)
   # else:
   #   print(test_recipe)
+  # test_quantity = Quantity.query.filter_by(QRecipeID=200).first()
+  # print(test_quantity.value)
   app.run()
 
 if __name__ == '__main__':
