@@ -5,7 +5,7 @@ from unicodedata import numeric
 import csv 
 import sys
 
-units = 'ounces pounds gallons quarts pints cups tablespoons teaspoons fluid ounces liters pinches cloves' 
+units = ['ounces', 'ounce', 'pounds', 'pound', 'gallons', 'gallon', 'quarts', 'quart', 'pints', 'pint', 'cups', 'cup', 'tablespoons', 'tablespoon', 'teaspoons', 'teaspoon', 'fluid', 'liters', 'liter', 'pinches', 'pinch', 'cloves', 'clove'] 
 
 # This is to remember what the indexes mean
 # recipe = ['name', 'time', 'servingSize', 'user']
@@ -41,40 +41,66 @@ def scrape_and_write(scraper):
     # Get recipe data
     serving = scraper.yields().split(' ')[0]
     recipe = [scraper.title(), scraper.total_time(), serving, 1]
-    print(serving)
 
     # Get ingredient data
     ingredients = []
     for ingredient in scraper.ingredients():
+        split = ingredient.split(' ')
         measurement = ''
-        value = ingredient.split(' ')[0]
+        is_uni = False
+        value = split[0]
         name_ind_start = 1
-        # Get value if it's a number
-        if ingredient.split(' ')[0][0].isalpha():
-            value = ''
-            name_ind_start = 0 
+        print(ingredient)
+        # If it's a string, where we grab ingredient name starts earlier
+        if split[0][0].isalpha():
+            # Check to see if it's actually just unicode
+            if ord(split[0][0]) < 127:
+            # character is ASCII, not unicode
+                value = ''
+                name_ind_start = 0 
+                
+        # Check for unicode mixed numbers
+        if len(split) > 1 and ord(split[1][0]) > 127:
+            value += split[1]
+            name_ind_start = 2
+            is_uni = True
+        
         state = ''
         name_ind_end = len(ingredient.split(',')[0].split(' '))
         # Get state which is always indicated by the comma
         if ',' in ingredient:
             state = ingredient.split(',')[1]
+            print(state)
         # Get the Real Measurement if there's parenthesis (aka 1 can = 7 oz)
         if '(' in ingredient and ingredient[ingredient.index('(')+1:ingredient.index('(')+2].isdigit():
             actual = ingredient[ingredient.index('(')+1:ingredient.index(')')]
-            value = str(convert_to_float(actual.split(' ')[0])*convert_to_float(ingredient.split(' ')[0]))
             if actual.split(' ')[1] == 'fluid':
+                value = str(convert_to_float(actual.split(' ')[0])*convert_to_float(ingredient.split(' ')[0]))
                 measurement = actual.split(' ')[1] + actual.split(' ')[2]
-            else:
+                name_ind_start = 5
+            elif actual.split(' ')[1] in units:
+                value = str(convert_to_float(actual.split(' ')[0])*convert_to_float(ingredient.split(' ')[0]))
                 measurement = actual.split(' ')[1]
-            name_ind_start = 4
+                name_ind_start = 4
+            # If parenthesis just don't mean that at all i.e. 10 (6 inch) corn tortillas
+            
+                
         # Otherwise check for if there's a measurement at all
-        if len(ingredient.split(' ')) > 1 and ingredient.split(' ')[1] in units:
-            if ingredient.split(' ')[1] == 'fluid':
-                measurement = ingredient.split(' ')[1] + ingredient.split(' ')[2]
-                name_ind_start = 3
-            else:
-                measurement = ingredient.split(' ')[1]
-                name_ind_start = 2
+        if len(split) > 1:
+            if split[1] in units:
+                if split[1] == 'fluid':
+                    measurement = split[1] + ' ' + split[2]
+                    name_ind_start = 3
+                else:
+                    measurement = split[1]
+                    name_ind_start = 2
+            elif len(split) > 2 and split[2] in units:
+                if is_uni:
+                    measurement = split[2]
+                    name_ind_start = 3 
+                    if split[2] == 'fluid':
+                        measurement = split[2] + ' ' + split[3]
+                        name_ind_start = 4
         # Get the ingredient name
         name = ''
         for index in range(name_ind_start, name_ind_end):
@@ -82,6 +108,7 @@ def scrape_and_write(scraper):
                 name += ingredient.split(' ')[index][:-1] + ' '
             else:
                 name += ingredient.split(' ')[index] + ' '
+        print([value, measurement, name, state])
         ingredients.append([value, measurement, name, state])
 
     # Getting steps
@@ -135,10 +162,10 @@ def scrape_and_write(scraper):
         # Insert quantity
         if row[0] == '':
             cursor.execute(
-            "INSERT INTO quantity (RecipeID, IngredientID, measurement, state) VALUES (%s, %s, %s, %s)", [RecipeID, IngredientID, row[1], row[3]])
+            "INSERT INTO quantity (QRecipeID, QIngredientID, measurement, state) VALUES (%s, %s, %s, %s)", [RecipeID, IngredientID, row[1], row[3]])
         else:
             cursor.execute(
-                "INSERT INTO quantity (RecipeID, IngredientID, value, measurement, state) VALUES (%s, %s, %s, %s, %s)", [RecipeID, IngredientID, row[0], row[1], row[3]])
+                "INSERT INTO quantity (QRecipeID, QIngredientID, value, measurement, state) VALUES (%s, %s, %s, %s, %s)", [RecipeID, IngredientID, row[0], row[1], row[3]])
 
     conn.commit()
     cursor.close()
@@ -149,7 +176,7 @@ def main():
         for link in datareader:
             scraper = scrape_me(link[0])
             scrape_and_write(scraper)
-
+            
 if __name__=="__main__":
     main()
     print('Done')
