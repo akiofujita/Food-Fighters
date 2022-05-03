@@ -212,20 +212,40 @@ class displaycards(Resource):
     Customized display function. Grabs custom recipes (user submitted)
     from database and send to React for display on UI.
     """
-    conn = sqlite3.connect('data/recipes.db')
-    cursor = conn.cursor()
+    # conn = sqlite3.connect('data/recipes.db')
+    # cursor = conn.cursor()
     
-    columns = 'recipe_name, ingredients, prep_time'
-    cursor.execute(f'''SELECT {columns} FROM recipes;''')
+    # columns = 'recipe_name, ingredients, prep_time'
+    # cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
-    recipes = cursor.fetchall()
+    # recipes = cursor.fetchall()
+
+    recipes = Recipe.query.filter_by(author=2).all()
     numRecipes = len(recipes)
-    recipes = orgRecipe(recipes)
+    recipesList = []
+    for recipe in recipes:
+      recipe_name = recipe.name
+      rID = recipe.RecipeID
+      time = recipe.totalTime
+      # obtain ingredients
+      quants = Quantity.query.filter_by(QRecipeID=rID).all()
+      ingredients = ''
+      for quant in quants:
+        ingID = quant.QIngredientID
+        ing = Ingredient.query.filter_by(IngredientID=ingID).first()
+        amount = quant.value
+        unit = quant.measurement
+        ing_name = ing.name
+        ingredients += f'{amount} {unit} {ing_name}, '
+      ingredients = ingredients[:-2]
+      recipesList.append([recipe_name, ingredients, time])
 
-    print(recipes)
-    print(numRecipes)
+    recipes = orgRecipe(recipesList)
+
+    # print(recipes)
+    # print(numRecipes)
     
-    conn.close()
+    # conn.close()
     return {
       'num_recipes': numRecipes,
       'recipes': recipes
@@ -235,6 +255,10 @@ class displaycards(Resource):
 # Output: List of recipes, quantities, and steps
 @api.route("/search", endpoint="search")
 class search(Resource):
+  def post(self):
+    """
+    Obtain search term from
+    """
   def get(self):
     """
     
