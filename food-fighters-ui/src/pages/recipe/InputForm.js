@@ -3,7 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {ThemeProvider} from '@mui/material/styles';
-import {theme} from './ColorTheme';
+import {theme} from '../../ColorTheme';
 import IngredientForm from './IngredientForm';
 import StepForm from './StepForm';
 import './InputForm.css';
@@ -12,7 +12,8 @@ export default function InputForm() {
   const [values, setValues] = React.useState({
     recipe_title: '',
     recipe_desc: '',
-    total_time: null
+    total_time: null,
+    serving_size: null
   });
 
   const handleChange = (prop) => (event) => {
@@ -22,6 +23,7 @@ export default function InputForm() {
   return (
     <form className='recipeForm' action='submitrecipe' method='post'>
       <h2>Add New Recipe</h2>
+      <ThemeProvider theme={theme}>
       <div className='recipeDetails'>
         <TextField
           required
@@ -63,11 +65,23 @@ export default function InputForm() {
               endAdornment: <InputAdornment position='end'>minutes</InputAdornment>
             }}
           />
+          <TextField
+            required
+            label='Serving Size'
+            name='serving_size'
+            id='serving_size'
+            value={values.serving_size ? values.serving_size : '' }
+            onChange={handleChange('serving_size')}
+            sx={{
+              mt: 2,
+              mr: 2,
+              minWidth: '40%'
+            }}
+          />
         </div>
       </div>
       <IngredientForm />
       <StepForm />
-      <ThemeProvider theme={theme}>
         <Button
           variant='outlined'
           type='submit'

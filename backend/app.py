@@ -76,13 +76,11 @@ class submitRecipe(Resource):
       recipe_title = form.getlist('recipe_title')[0]
       recipe_desc = form.getlist('recipe_desc')[0]
       total_time = form.getlist('total_time')[0]
+      serving_size = form.getlist('serving_size')[0]
       ing_names = form.getlist('ing_name')
       ing_quants = form.getlist('ing_quant')
       ing_units = convertUnits(form.getlist('ing_units'))
       steps = form.getlist('steps')
-
-      if (len(ing_names) != len(ing_quants) or len(ing_names) != len(ing_units) or len(ing_quants) != len(ing_units)):
-        raise ValueError("Length Error")
       
       ingredients = []
       for i in range(len(ing_names)):
@@ -103,13 +101,13 @@ class submitRecipe(Resource):
       # Insert recipe
       # TODO: Update serving size to be based off recipe
       custom_recipe = Recipe(name=recipe_title, description=recipe_desc, \
-        totalTime=total_time, author=2, servingSize=1)
+        totalTime=total_time, author=2, servingSize=serving_size)
       db.session.add(custom_recipe)
       db.session.commit()
 
       # Query added recipe for RecipeID
       rID = Recipe.query.filter_by(name=recipe_title, description=recipe_desc, \
-        totalTime=total_time, author=2, servingSize=1).first().RecipeID
+        totalTime=total_time, author=2, servingSize=serving_size).first().RecipeID
 
       # Input ingredients and quantities
       for ind, ingredient in enumerate(ing_names):
@@ -135,10 +133,6 @@ class submitRecipe(Resource):
         db.session.commit()
 
       return flask.redirect("http://localhost:3000/Add")
-    
-    except ValueError("Length Error"):
-      print("Ingredient List Length Error")
-      return flask.redirect("http://localhost:3000")
 
     except Exception as e:
       print(e)
@@ -253,16 +247,26 @@ class displaycards(Resource):
 
 # Input: List of ingredients to query
 # Output: List of recipes, quantities, and steps
-@api.route("/search", endpoint="search")
-class search(Resource):
+@api.route("/searchrecipe", endpoint="searchrecipe")
+class searchRecipe(Resource):
   def post(self):
-    """
-    Obtain search term from
-    """
-  def get(self):
-    """
-    
-    """
+    """ API for submitting a search for a recipe. """
+    try:
+      conn = sqlite3.connect('data/recipes.db')
+      cursor = conn.cursor()
+
+      form = flask.request.form
+      search_string = form.getlist('search_string')[0]
+      print('Searching for: ' + search_string)
+
+      conn.commit()
+      conn.close()
+
+      return flask.redirect("http://localhost:3000")
+
+    except Exception as e:
+      print(e)
+      return flask.redirect("http://localhost:3000")
 
 class Recipe(db.Model):
   RecipeID = db.Column(INTEGER, unique=True, primary_key=True)
