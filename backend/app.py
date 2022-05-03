@@ -69,8 +69,8 @@ class submitRecipe(Resource):
   def post(self):
     """ API for submitting a recipe to the database. """
     try:
-      conn = sqlite3.connect('data/recipes.db')
-      cursor = conn.cursor()
+      # conn = sqlite3.connect('data/recipes.db')
+      # cursor = conn.cursor()
 
       form = flask.request.form
       recipe_title = form.getlist('recipe_title')[0]
@@ -82,26 +82,55 @@ class submitRecipe(Resource):
       steps = form.getlist('steps')
 
       if (len(ing_names) != len(ing_quants) or len(ing_names) != len(ing_units) or len(ing_quants) != len(ing_units)):
-        raise LengthError
+        raise ValueError("Length Error")
       
       ingredients = []
       for i in range(len(ing_names)):
         ingredients.append((ing_names[i], ing_quants[i], ing_units[i]))
 
-      print('Recipe Title: ' + recipe_title)
-      print('Recipe Desc : ' + recipe_desc)
-      print('Total Time  : ' + total_time)
-      print('Ingredients : ')
-      print(ingredients)
-      print('Steps       : ')
-      print(steps)
+      # Test Outputs
+      # print('Recipe Title: ' + recipe_title)
+      # print('Recipe Desc : ' + recipe_desc)
+      # print('Total Time  : ' + total_time)
+      # print('Ingredients : ')
+      # print(ingredients)
+      # print('Steps       : ')
+      # print(steps)
 
-      conn.commit()
-      conn.close()
+      # conn.commit()
+      # conn.close()
+      
+      # Insert recipe
+      # TODO: Update serving size to be based off recipe
+      custom_recipe = Recipe(name=recipe_title, description=recipe_desc, \
+        totalTime=total_time, author=5, servingSize=1)
+      db.session.add(custom_recipe)
+      db.session.commit()
+
+      # Query added recipe for RecipeID
+      rID = Recipe.query.filter_by(name=recipe_title, description=recipe_desc, \
+        totalTime=total_time, author=5, servingSize=1).first().RecipeID
+
+      # Input ingredients
+      for ind, ingredient in enumerate(ing_names):
+        # Check if ingredient exists and obtain IngredientID
+        exist = Ingredient.query.filter_by(name=ingredient).first()
+        if exist is None: # Add ingredient
+          ingModel = Ingredient(name=ingredient)
+          db.session.add(ingModel)
+          db.session.commit()
+          iID = Ingredient.query.filter_by(name=ingredient).first().IngredientID
+        else:
+          iID = exist.IngredientID
+
+        # Input quantities
+        quantModel = Quantity(RecipeId=rID, IngredientID=iID, value=ing_quants[ind], measurement=ing_units[ind])
+        db.session.add(quantModel)
+        db.session.commit()
 
       return flask.redirect("http://localhost:3000/Add")
     
-    except LengthError:
+    except ValueError("Length Error"):
       print("Ingredient List Length Error")
       return flask.redirect("http://localhost:3000")
 
@@ -144,6 +173,7 @@ class display(Resource):
     return sorted_recipes
 
 @api.route("/getcard", endpoint="getcard")
+@api.deprecated
 class getcard(Resource):
   def get(self):
     """ 
@@ -173,8 +203,8 @@ class getcard(Resource):
 class displaycards(Resource):
   def get(self):
     """ 
-    Test display function. Grabs all recipes from database
-    and send to React for display on UI.
+    Customized display function. Grabs custom recipes (user submitted)
+    from database and send to React for display on UI.
     """
     conn = sqlite3.connect('data/recipes.db')
     cursor = conn.cursor()
@@ -195,6 +225,15 @@ class displaycards(Resource):
       'recipes': recipes
     }
 
+# Input: List of ingredients to query
+# Output: List of recipes, quantities, and steps
+@api.route("/search", endpoint="search")
+class search(Resource):
+  def get(self):
+    """
+    
+    """
+
 class Recipe(db.Model):
   RecipeID = db.Column(INTEGER, unique=True, primary_key=True)
   name = db.Column(VARCHAR(45), unique=True, nullable=False)
@@ -202,6 +241,7 @@ class Recipe(db.Model):
   totalTime = db.Column(INTEGER, nullable=False)
   author = db.Column(INTEGER, db.ForeignKey('user.UserID'), nullable=False)
   servingSize = db.Column(INTEGER, nullable=False)
+  quantities = db.relationship('Quantity', backref='quantity_recipe', lazy=True)
 
 class User(db.Model):
   UserID = db.Column(INTEGER, unique=True, primary_key=True)
@@ -211,9 +251,25 @@ class User(db.Model):
   create_time = db.Column(TIMESTAMP, nullable=False)
   recipes = db.relationship('Recipe', backref='recipe_author', lazy=True)
 
+class Quantity(db.Model):
+  RecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
+  IngredientID = db.Column(INTEGER, db.ForeignKey('ingredient.IngredientID'), primary_key=True)
+  value = db.Column(FLOAT, nullable=False)
+  measurement = db.Column(VARCHAR(45), nullable=False)
+  state = db.Column(VARCHAR(45))
+
+class Ingredient(db.Model):
+  IngredientID = db.Column(INTEGER, unique=True, primary_key=True)
+  name = db.Column(VARCHAR(45), nullable=False)
+  quantities = db.relationship('Quantity', backref='quantity_ingredient', lazy=True)
+
+
 def main():
-  # test_recipe = Recipe.query.filter_by(name='Beef Noodle Soup').first()
-  # print(test_recipe.RecipeID)
+  # test_recipe = Recipe.query.filter_by(name='Beef Noodle Soups').first()
+  # if test_recipe is not None:
+  #   print(test_recipe.RecipeID)
+  # else:
+  #   print(test_recipe)
   app.run()
 
 if __name__ == '__main__':
