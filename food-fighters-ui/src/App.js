@@ -4,8 +4,7 @@ import Footer from './pages/Footer';
 import HomePage from './pages/home/HomePage'
 import RecipePage from './pages/recipe/RecipePage'
 import ListPage from './pages/list/ListPage'
-import ContactPage from './pages/contact/ContactPage'
-import AccountPage from './pages/account/AccountPage'
+import AboutPage from './pages/about/AboutPage'
 
 import {
   BrowserRouter as Router,
@@ -27,8 +26,7 @@ export default function App() {
         <Route exact path='/'   element={<HomePage/>} />
         <Route path='/Add'      element={<RecipePage/>} />
         <Route path='/List'     element={<ListPage/>} />
-        <Route path='/Contact'  element={<ContactPage/>} />
-        <Route path='/Account'  element={<AccountPage/>} />
+        <Route path='/AboutUs'  element={<AboutPage/>} />
       </Routes>
       
       <div className="container"></div>

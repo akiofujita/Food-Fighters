@@ -40,19 +40,13 @@ export default function NavBar() {
           >List</button>
         </Link>
 
-        <Link to='/Contact'>
+        <Link to='/AboutUs'>
           <button 
-              className={`btn navBtn ${active === 'Contact' ? 'activeBtn' : ''}`}
-              onClick={() => setActive('Contact')}
-          >Contact</button>
+              className={`btn navBtn ${active === 'AboutUs' ? 'activeBtn' : ''}`}
+              onClick={() => setActive('AboutUs')}
+          >About Us</button>
         </Link>
-
-        <Link to='/Account'>
-          <button 
-              className={`btn navBtn ${active === 'Account' ? 'activeBtn' : ''}`}
-              onClick={() => setActive('Account')}
-          >Account</button>
-        </Link>
+        
       </div>
     </div>
   );
