@@ -31,6 +31,7 @@ def test_submit():
         "steps": "Ignore this :)",
     })
       # If these are true, then we've successfully submitted
+      response = test_client.get("/submitrecipe")
       assert response.request.path == "/add"
       
 def test_search():
@@ -43,7 +44,7 @@ def test_search():
         "searchStr": "est",
     })
     # If these are true, then we've successfully submitted
-    assert response.json["num_recipes"] >= 1
+    assert response.json['num_recipes'] >= 1
   
   # Delete from database when done to ensure that this is checked every time
   cnx = mysql.connector.connect(user='root', password='ffDB2022!', host = '34.72.233.63', database='FoodFighters')
