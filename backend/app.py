@@ -221,26 +221,61 @@ class displaycards(Resource):
 
 # Input: List of ingredients to query
 # Output: List of recipes, quantities, and steps
-@api.route("/searchrecipe", endpoint="searchrecipe")
+# @api.route("/searchrecipe", endpoint="searchrecipe")
+@app.route("/searchrecipe/<searchstring>")
 class searchRecipe(Resource):
-  def post(self):
-    """ API for submitting a search for a recipe. """
-    try:
-      conn = sqlite3.connect('data/recipes.db')
-      cursor = conn.cursor()
+  # def post(self):
+  #   """ API for submitting a search for a recipe. """
+  #   try:
+  #     conn = sqlite3.connect('data/recipes.db')
+  #     cursor = conn.cursor()
 
-      form = flask.request.form
-      search_string = form.getlist('search_string')[0]
-      print('Searching for: ' + search_string)
+  #     form = flask.request.form
+  #     search_string = form.getlist('search_string')[0]
+  #     print('Searching for: ' + search_string)
+    
+  #     columns = 'recipe_name, ingredients, prep_time'
+  #     cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
-      conn.commit()
-      conn.close()
+  #     recipes = cursor.fetchall()
+  #     numRecipes = len(recipes)
+  #     recipes = orgRecipe(recipes)
 
-      return flask.redirect("http://localhost:3000")
+  #     print(recipes)
+  #     print(numRecipes)
+      
+  #     conn.close()
+      # return {
+      #   'num_recipes': numRecipes,
+      #   'recipes': recipes
+      # }
 
-    except Exception as e:
-      print(e)
-      return flask.redirect("http://localhost:3000")
+      # return flask.redirect("http://localhost:3000")
+
+    # except Exception as e:
+    #   print(e)
+    #   return flask.redirect("http://localhost:3000")
+
+  def get(self, searchstring):
+    conn = sqlite3.connect('data/recipes.db')
+    cursor = conn.cursor()
+  
+    print(searchstring)
+    columns = 'recipe_name, ingredients, prep_time'
+    cursor.execute(f'''SELECT {columns} FROM recipes;''')
+
+    recipes = cursor.fetchall()
+    numRecipes = len(recipes)
+    recipes = orgRecipe(recipes)
+
+    print(recipes)
+    print(numRecipes)
+    
+    conn.close()
+    return {
+      'num_recipes': numRecipes,
+      'recipes': recipes
+    }
 
 class Recipe(db.Model):
   RecipeID = db.Column(INTEGER, unique=True, primary_key=True)

@@ -3,30 +3,53 @@ import '../../App.css';
 
 import RecipeCard from './RecipeCard';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import {ThemeProvider} from '@mui/material/styles';
 import {theme} from '../../ColorTheme';
+import {useSearchParams} from 'react-router-dom';
 
 export default function HomePage() {
-  const [values, setValues] = useState({
-    search_string: ''
-  });
-
-  let [numRecipes, setNumRecipes] = useState(null);
-  let [recipeList, setRecipeList] = useState(null);
+  let [searchStr,  setSearchStr]  = useState("");
+  let [recipeRes,  setRecipeRes]  = useState({
+    numRecipes: null,
+    recipeList: null
+  })
   let [didSearch,  setDidSearch]  = useState(false);
 
+  const [search, setSearch] = useSearchParams();
+
   useEffect(() => {
-    const article = { title: 'React Hooks POST Request Example' };
-    axios.post('/displayrecipes', article)
-        .then(response => {
-          setNumRecipes(response.data.numRecipes);
-          setRecipeList(response.data.recipeList)
+    console.log("use effect");
+    const fetchData = async () => {
+      if (searchStr !== "") {
+        console.log("fetching...");
+        // const myData = {
+        //   search_string: searchStr
+        // }
+        // console.log("myData: " + JSON.stringify(myData));
+        // const result = await fetch('/searchrecipe', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify(myData)
+        // })
+        fetch('/searchrecipe/' + searchStr)
+        .then(response => response.json())
+        .then(data => {
+          setRecipeRes({numRecipes: data.num_recipes, recipeList: data.recipes});
         });
-  }, []);
+        console.log("json");
+        // const resultInJson = await result.json();
+        // console.log(JSON.stringify(resultInJson));
+      }
+    }
+
+    fetchData();
+  }, [searchStr]);
 
   // useEffect(() => {
   //   // POST request using axios inside useEffect React hook
@@ -37,13 +60,10 @@ export default function HomePage() {
   // // empty dependency array means this effect will only run once (like componentDidMount in classes)
   // }, []);
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleSubmit = () => {
-    setDidSearch(true);
-  };
+  function handleChange(event) {
+    setSearchStr(event.target.value);
+    // setSearch( event.target.value );
+  }
 
   return (
     <div className='homePage'>
@@ -51,14 +71,13 @@ export default function HomePage() {
         <div className='homeHeader'>
           <h1>Welcome to Food Fighters!</h1>
         </div>
-        <form action='searchrecipe' method='post'>
+        <form>
           <div className='recipeSearch'>
             <TextField
               label='Search For Recipes'
               placeholder='Type Ingredients'
-              value={values.search_string}
-              onChange={handleChange('search_string')}
-              onSubmit={handleSubmit}
+              value={searchStr}
+              onChange={handleChange}
               name='search_string'
               id='search_string'
               sx={{
@@ -71,7 +90,7 @@ export default function HomePage() {
           </div>
         </form>
         <div className='cards'>
-          {getCards(numRecipes, recipeList)}
+          {getCards(recipeRes.numRecipes, recipeRes.recipeList)}
         </div>
       </ThemeProvider>
       <p>Did Search: {JSON.stringify(didSearch)}</p>
