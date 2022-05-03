@@ -31,7 +31,6 @@ def test_submit():
         "steps": "Ignore this :)",
     })
       # If these are true, then we've successfully submitted
-      assert len(response.history) == 1
       assert response.request.path == "/add"
       
 def test_search():
@@ -40,7 +39,9 @@ def test_search():
   """
   with flask_app.test_client() as test_client:
     # Sample recipe to add
-    response = test_client.get('/searchrecipe', "test")
+    response = test_client.get('/searchrecipe', data={
+        "searchStr": "est",
+    })
     # If these are true, then we've successfully submitted
     assert response.json["num_recipes"] >= 1
   
