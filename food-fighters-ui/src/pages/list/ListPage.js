@@ -5,7 +5,7 @@ import RecipeCardList from './RecipeCardList';
 export default function ListPage() {
   return (
     <div className='listPage'>
-      <h2>Your Recipes</h2>
+      <h2>My Saved Recipes</h2>
       <RecipeCardList />
     </div>
   );

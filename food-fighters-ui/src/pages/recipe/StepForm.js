@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
 import {ThemeProvider} from '@mui/material/styles';
-import {theme} from './ColorTheme';
+import {theme} from '../../ColorTheme';
 import './StepForm.css';
 
 export default function StepForm() {
