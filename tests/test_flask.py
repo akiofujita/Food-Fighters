@@ -11,4 +11,5 @@ def test_homepage():
   """
   with flask_app.test_client() as test_client:
     response = test_client.get('/')
+    print(response.status_code == 200)
     assert response.status_code == 200

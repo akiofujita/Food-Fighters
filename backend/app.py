@@ -109,7 +109,7 @@ class submitRecipe(Resource):
       rID = Recipe.query.filter_by(name=recipe_title, description=recipe_desc, \
         totalTime=total_time, author=2, servingSize=serving_size).first().RecipeID
 
-      # Input ingredients
+      # Input ingredients and quantities
       for ind, ingredient in enumerate(ing_names):
         # Check if ingredient exists and obtain IngredientID
         exist = Ingredient.query.filter_by(name=ingredient).first()
@@ -124,6 +124,12 @@ class submitRecipe(Resource):
         # Input quantities
         quantModel = Quantity(value=ing_quants[ind], measurement=ing_units[ind], QRecipeID=int(rID), QIngredientID=int(iID))
         db.session.add(quantModel)
+        db.session.commit()
+      
+      # Input Steps
+      for ind, step in enumerate(steps):
+        stepModel = Steps(StepsRecipeID=rID, order=ind, direction=step)
+        db.session.add(stepModel)
         db.session.commit()
 
       return flask.redirect("http://localhost:3000/Add")
@@ -200,20 +206,40 @@ class displaycards(Resource):
     Customized display function. Grabs custom recipes (user submitted)
     from database and send to React for display on UI.
     """
-    conn = sqlite3.connect('data/recipes.db')
-    cursor = conn.cursor()
+    # conn = sqlite3.connect('data/recipes.db')
+    # cursor = conn.cursor()
     
-    columns = 'recipe_name, ingredients, prep_time'
-    cursor.execute(f'''SELECT {columns} FROM recipes;''')
+    # columns = 'recipe_name, ingredients, prep_time'
+    # cursor.execute(f'''SELECT {columns} FROM recipes;''')
 
-    recipes = cursor.fetchall()
+    # recipes = cursor.fetchall()
+
+    recipes = Recipe.query.filter_by(author=2).all()
     numRecipes = len(recipes)
-    recipes = orgRecipe(recipes)
+    recipesList = []
+    for recipe in recipes:
+      recipe_name = recipe.name
+      rID = recipe.RecipeID
+      time = recipe.totalTime
+      # obtain ingredients
+      quants = Quantity.query.filter_by(QRecipeID=rID).all()
+      ingredients = ''
+      for quant in quants:
+        ingID = quant.QIngredientID
+        ing = Ingredient.query.filter_by(IngredientID=ingID).first()
+        amount = quant.value
+        unit = quant.measurement
+        ing_name = ing.name
+        ingredients += f'{amount} {unit} {ing_name}, '
+      ingredients = ingredients[:-2]
+      recipesList.append([recipe_name, ingredients, time])
 
-    print(recipes)
-    print(numRecipes)
+    recipes = orgRecipe(recipesList)
+
+    # print(recipes)
+    # print(numRecipes)
     
-    conn.close()
+    # conn.close()
     return {
       'num_recipes': numRecipes,
       'recipes': recipes
@@ -222,40 +248,8 @@ class displaycards(Resource):
 # Input: List of ingredients to query
 # Output: List of recipes, quantities, and steps
 # @api.route("/searchrecipe", endpoint="searchrecipe")
-@app.route("/searchrecipe/<searchstring>")
+@app.route("/searchrecipe?<searchstring>")
 class searchRecipe(Resource):
-  # def post(self):
-  #   """ API for submitting a search for a recipe. """
-  #   try:
-  #     conn = sqlite3.connect('data/recipes.db')
-  #     cursor = conn.cursor()
-
-  #     form = flask.request.form
-  #     search_string = form.getlist('search_string')[0]
-  #     print('Searching for: ' + search_string)
-    
-  #     columns = 'recipe_name, ingredients, prep_time'
-  #     cursor.execute(f'''SELECT {columns} FROM recipes;''')
-
-  #     recipes = cursor.fetchall()
-  #     numRecipes = len(recipes)
-  #     recipes = orgRecipe(recipes)
-
-  #     print(recipes)
-  #     print(numRecipes)
-      
-  #     conn.close()
-      # return {
-      #   'num_recipes': numRecipes,
-      #   'recipes': recipes
-      # }
-
-      # return flask.redirect("http://localhost:3000")
-
-    # except Exception as e:
-    #   print(e)
-    #   return flask.redirect("http://localhost:3000")
-
   def get(self, searchstring):
     conn = sqlite3.connect('data/recipes.db')
     cursor = conn.cursor()
@@ -306,6 +300,10 @@ class Ingredient(db.Model):
   name = db.Column(VARCHAR(45), nullable=False)
   quantities = db.relationship('Quantity', backref='quantity_IngredientID', lazy=True)
 
+class Steps(db.Model):
+  StepsRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
+  order = db.Column(INTEGER, unique=True, primary_key=True)
+  direction = db.Column(MEDIUMTEXT, nullable=False)
 
 def main():
   # test_recipe = Recipe.query.filter_by(name='Beef Noodle Soups').first()

@@ -37,7 +37,7 @@ export default function HomePage() {
         //   },
         //   body: JSON.stringify(myData)
         // })
-        fetch('/searchrecipe/' + searchStr)
+        fetch('/searchrecipe?' + searchStr)
         .then(response => response.json())
         .then(data => {
           setRecipeRes({numRecipes: data.num_recipes, recipeList: data.recipes});
