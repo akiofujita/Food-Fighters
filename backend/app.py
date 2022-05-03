@@ -254,7 +254,7 @@ class searchRecipe(Resource):
     conn = sqlite3.connect('data/recipes.db')
     cursor = conn.cursor()
   
-    print(searchstring)
+    print("Searched: " + searchstring)
     columns = 'recipe_name, ingredients, prep_time'
     cursor.execute(f'''SELECT {columns} FROM recipes;''')
 

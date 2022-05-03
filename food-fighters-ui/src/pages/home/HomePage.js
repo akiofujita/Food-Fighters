@@ -51,6 +51,13 @@ export default function HomePage() {
     fetchData();
   }, [searchStr]);
 
+  function getRecipe() {
+    fetch('/searchrecipe?' + searchStr)
+      .then(response => response.json())
+      .then(data => {
+        setRecipeRes({numRecipes: data.num_recipes, recipeList: data.recipes});
+      });
+  }
   // useEffect(() => {
   //   // POST request using axios inside useEffect React hook
   //   const article = { title: 'React Hooks POST Request Example' };
@@ -65,6 +72,12 @@ export default function HomePage() {
     // setSearch( event.target.value );
   }
 
+  function handleSubmit(event) {
+    alert(event.target);
+    setDidSearch(true);
+    getRecipe();
+  }
+
   return (
     <div className='homePage'>
       <ThemeProvider theme={theme}>
@@ -72,22 +85,23 @@ export default function HomePage() {
           <h1>Welcome to Food Fighters!</h1>
         </div>
         <form>
-          <div className='recipeSearch'>
-            <TextField
-              label='Search For Recipes'
-              placeholder='Type Ingredients'
-              value={searchStr}
-              onChange={handleChange}
-              name='search_string'
-              id='search_string'
-              sx={{
-                mt: 2
-              }}
-            />
-            <IconButton id='searchIcon' type="submit" sx={{ p: '10px' }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-          </div>
+        <div className='recipeSearch'>
+          <TextField
+            label='Search For Recipes'
+            placeholder='Type Ingredients'
+            value={searchStr}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            name='search_string'
+            id='search_string'
+            sx={{
+              mt: 2
+            }}
+          />
+          <IconButton id='searchIcon' type="submit" sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+        </div>
         </form>
         <div className='cards'>
           {getCards(recipeRes.numRecipes, recipeRes.recipeList)}
