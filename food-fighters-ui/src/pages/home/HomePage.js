@@ -22,68 +22,47 @@ export default function HomePage() {
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
-    console.log("use effect");
     const fetchData = async () => {
       if (searchStr !== "") {
-        console.log("fetching...");
-        // const myData = {
-        //   search_string: searchStr
-        // }
-        // console.log("myData: " + JSON.stringify(myData));
-        // const result = await fetch('/searchrecipe', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify(myData)
-        // })
         fetch('/searchrecipe?searchStr=' + searchStr)
         .then(response => response.json())
         .then(data => {
           setRecipeRes({numRecipes: data.num_recipes, recipeList: data.recipes});
         });
-        console.log("json");
-        // const resultInJson = await result.json();
-        // console.log(JSON.stringify(resultInJson));
+        setDidSearch(true);
       }
     }
 
     fetchData();
   }, [searchStr]);
 
-  // useEffect(() => {
-  //   // POST request using axios inside useEffect React hook
-  //   const article = { title: 'React Hooks POST Request Example' };
-  //   axios.post('https://reqres.in/api/articles', article)
-  //       .then(response => setArticleId(response.data.id));
-
-  // // empty dependency array means this effect will only run once (like componentDidMount in classes)
-  // }, []);
-
   function handleChange(event) {
     setSearchStr(event.target.value);
-    // setSearch( event.target.value );
   }
 
   return (
     <div className='homePage'>
       <ThemeProvider theme={theme}>
-        <div className='homeHeader'>
-          <h1>Welcome to Food Fighters!</h1>
-        </div>
+        {!didSearch &&
+          <div className='homeHeader'>
+            <h1>Welcome to Food Fighters!</h1>
+          </div>
+        }
         <form>
           <div className='recipeSearch'>
-            <TextField
-              label='Search For Recipes'
-              placeholder='Type Ingredients'
-              value={searchStr}
-              onChange={handleChange}
-              name='search_string'
-              id='search_string'
-              sx={{
-                mt: 2
-              }}
-            />
+            <div className='searchBox'>
+              <TextField
+                label='Search For Recipes'
+                placeholder='Type Ingredients'
+                value={searchStr}
+                onChange={handleChange}
+                name='search_string'
+                id='search_string'
+                sx={{
+                  mt: 2
+                }}
+              />
+            </div>
             <IconButton id='searchIcon' type="submit" sx={{ p: '10px' }} aria-label="search">
               <SearchIcon />
             </IconButton>
@@ -93,7 +72,6 @@ export default function HomePage() {
           {getCards(recipeRes.numRecipes, recipeRes.recipeList)}
         </div>
       </ThemeProvider>
-      <p>Did Search: {JSON.stringify(didSearch)}</p>
     </div>
   );
 };

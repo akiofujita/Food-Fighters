@@ -29,7 +29,7 @@ export default function RecipeCard({recipe_name, ingredients, prep_time}) {
         <b>Ingredients:</b>
         <ul>
           {ingredients.map((ingredient, i) => {
-            if (i >= 0 && i <= 4) {
+            if (i >= 0 && i <= 2) {
               return (
                 <li>
                   {ingredient}
