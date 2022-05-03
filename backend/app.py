@@ -111,7 +111,7 @@ class submitRecipe(Resource):
       rID = Recipe.query.filter_by(name=recipe_title, description=recipe_desc, \
         totalTime=total_time, author=2, servingSize=1).first().RecipeID
 
-      # Input ingredients
+      # Input ingredients and quantities
       for ind, ingredient in enumerate(ing_names):
         # Check if ingredient exists and obtain IngredientID
         exist = Ingredient.query.filter_by(name=ingredient).first()
@@ -126,6 +126,12 @@ class submitRecipe(Resource):
         # Input quantities
         quantModel = Quantity(value=ing_quants[ind], measurement=ing_units[ind], QRecipeID=int(rID), QIngredientID=int(iID))
         db.session.add(quantModel)
+        db.session.commit()
+      
+      # Input Steps
+      for ind, step in enumerate(steps):
+        stepModel = Steps(StepsRecipeID=rID, order=ind, direction=step)
+        db.session.add(stepModel)
         db.session.commit()
 
       return flask.redirect("http://localhost:3000/Add")
@@ -263,6 +269,10 @@ class Ingredient(db.Model):
   name = db.Column(VARCHAR(45), nullable=False)
   quantities = db.relationship('Quantity', backref='quantity_IngredientID', lazy=True)
 
+class Steps(db.Model):
+  StepsRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
+  order = db.Column(INTEGER, unique=True, primary_key=True)
+  direction = db.Column(MEDIUMTEXT, nullable=False)
 
 def main():
   # test_recipe = Recipe.query.filter_by(name='Beef Noodle Soups').first()
