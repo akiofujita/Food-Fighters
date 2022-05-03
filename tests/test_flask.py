@@ -45,21 +45,16 @@ def test_submit():
   assert (count > 0) 
   """
       
-      
+"""      
 def test_search():
-  """
-  Moving onto searching for it
-  """
   with flask_app.test_client() as test_client:
     # Sample recipe to add
     response = test_client.get('/searchrecipe', data={
         "searchStr": "test",
     })
     # If these are true, then we've successfully submitted
-    a = json.loads(response)
-    assert a['num_recipes'] >= 1
-  
-  """
+    assert response['num_recipes'] >= 1
+    
   # Delete from database when done to ensure that this is checked every time
   cnx = mysql.connector.connect(user='root', password='ffDB2022!', host = '34.72.233.63', database='FoodFighters')
   cursor = cnx.cursor(buffered=True)
