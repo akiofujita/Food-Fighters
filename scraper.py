@@ -126,7 +126,7 @@ def scrape(scraper):
         else:
           measurement = split[0]
           name = ingredient.replace(measurement, '')[1:]
-    ingredients.append(Ingredient(value, measurement, name, state))
+    ingredients.append(Ingredient(value, measurement, name.strip(), state))
 
   # Getting steps
   steps = []
