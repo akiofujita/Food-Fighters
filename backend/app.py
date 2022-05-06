@@ -1,5 +1,5 @@
 """ This is the app.py module that keeps tracks of the various webapp routes """
-import email
+# import email
 import sqlite3
 import flask
 from flask_restx import Resource, Api
