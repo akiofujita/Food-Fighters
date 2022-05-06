@@ -106,7 +106,7 @@ def scrape(scraper):
                       ingredient)) > 0:
       # Multiply by p_value (default is 1, but will change if there are values in parenthesis)
       value = re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))',
-        ingredient)[0][0]
+                         ingredient)[0][0]
       value = str(convert_to_float(value)*convert_to_float(p_value[0]))
       # Get rid of number now that we have that
       ingredient = re.sub(r"(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))",
@@ -142,7 +142,7 @@ def scrape(scraper):
 
   return recipe, steps, ingredients
 
-  
+
 def write_to_db(recipe, steps, ingredients):
   """
   Args:
@@ -157,16 +157,16 @@ def write_to_db(recipe, steps, ingredients):
   cursor = conn.cursor(buffered=True)
 
   cursor.execute(
-      "INSERT INTO recipe (name,totalTime,servingSize,author) VALUES (%s, %s, %s, %s)",
-      [recipe.name, recipe.time, recipe.servingSize, recipe.user])
+    "INSERT INTO recipe (name,totalTime,servingSize,author) VALUES (%s, %s, %s, %s)",
+    [recipe.name, recipe.time, recipe.servingSize, recipe.user])
   # Get RecipeID from newly generated row
   cursor.execute("SELECT RecipeID FROM foodfighters.recipe WHERE name = %s", [recipe.name])
   RecipeID = cursor.fetchone()[0]
 
   for step in steps:
     cursor.execute(
-    "INSERT INTO steps (StepsRecipeID, steps.order, direction) VALUES (%s, %s, %s)", 
-    [RecipeID, step.order, step.direction])
+      "INSERT INTO steps (StepsRecipeID, steps.order, direction) VALUES (%s, %s, %s)",
+      [RecipeID, step.order, step.direction])
 
   for ingredient in ingredients:
     # CHECK FOR DUPLICATES FIRST
