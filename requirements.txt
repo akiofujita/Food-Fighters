@@ -8,5 +8,6 @@ pylint
 pytest
 pytest-cov
 python-dotenv
+recipe_scrapers
 SQLAlchemy
 Werkzeug
