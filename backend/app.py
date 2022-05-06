@@ -1,6 +1,4 @@
 """ This is the app.py module that keeps tracks of the various webapp routes """
-# import email
-import sqlite3
 import flask
 from flask_restx import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
@@ -12,7 +10,7 @@ from sqlalchemy.dialects.mysql import \
         TINYBLOB, TINYINT, TINYTEXT, VARBINARY, VARCHAR, YEAR
 
 app = flask.Flask(__name__)
-api = Api(app)
+api = Api(app, version='1.0.0', title='Food Fighters API', description='A set of APIs for the open source Food Fighters project')
 
 IP = '34.72.233.63'
 user = 'root'
@@ -27,6 +25,41 @@ app.config['SQLALCHEMY_DATABASE_URI'] = URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
+
+# SQLAlchemy models
+class Recipe(db.Model):
+  RecipeID = db.Column(INTEGER, unique=True, primary_key=True)
+  name = db.Column(VARCHAR(45), unique=True, nullable=False)
+  description = db.Column(MEDIUMTEXT)
+  totalTime = db.Column(INTEGER, nullable=False)
+  author = db.Column(INTEGER, db.ForeignKey('user.UserID'), nullable=False)
+  servingSize = db.Column(INTEGER, nullable=False)
+  quantities = db.relationship('Quantity', backref='quantity_RecipeID', lazy='joined')
+
+class User(db.Model):
+  UserID = db.Column(INTEGER, unique=True, primary_key=True)
+  username = db.Column(VARCHAR(16), unique=True, nullable=False)
+  email = db.Column(VARCHAR(255), unique=True, nullable=False)
+  password = db.Column(VARCHAR(32), nullable=False)
+  create_time = db.Column(TIMESTAMP, nullable=False)
+  recipes = db.relationship('Recipe', backref='recipe_author', lazy=True)
+
+class Quantity(db.Model):
+  QRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
+  QIngredientID = db.Column(INTEGER, db.ForeignKey('ingredient.IngredientID'), primary_key=True)
+  value = db.Column(FLOAT, nullable=False)
+  measurement = db.Column(VARCHAR(45), nullable=False)
+  state = db.Column(VARCHAR(45))
+
+class Ingredient(db.Model):
+  IngredientID = db.Column(INTEGER, unique=True, primary_key=True)
+  name = db.Column(VARCHAR(45), nullable=False)
+  quantities = db.relationship('Quantity', backref='quantity_IngredientID', lazy=True)
+
+class Steps(db.Model):
+  StepsRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
+  order = db.Column(INTEGER, unique=True, primary_key=True)
+  direction = db.Column(MEDIUMTEXT, nullable=False)
 
 unitsMap = {
   'met-0': 'grams',
@@ -74,8 +107,8 @@ def formatRecipes(recipes):
 class submitRecipe(Resource):
   def post(self):
     """ 
-    Obtain recipe data from HTML form on the submission page
-    and posts the data to the corresponding tables in the
+    Obtain recipe data from HTML form on the submission page \
+    and posts the data to the corresponding tables in the \
     MySQL database.
     """
     try:
@@ -130,39 +163,12 @@ class submitRecipe(Resource):
       print(e)
       return flask.redirect("http://localhost:3000")
 
-@api.route("/getcard", endpoint="getcard")
-@api.deprecated
-class getcard(Resource):
-  def get(self):
-    """ 
-    Test display function. Grabs all recipes from database
-    and send to React for display on UI.
-    """
-    conn = sqlite3.connect('data/recipes.db')
-    cursor = conn.cursor()
-    
-    columns = 'recipe_name, ingredients, prep_time'
-    cursor.execute(f'''SELECT {columns} FROM recipes;''')
-
-    recipes = cursor.fetchall()
-
-    name = recipes[-1][0]
-    ings = recipes[-1][1]
-    time = recipes[-1][2]
-    
-    conn.close()
-    return {
-      'recipe_name': name,
-      'ingredients': ings,
-      'prep_time': time
-    }
-
 @api.route("/displaycards", endpoint="displaycards")
 class displaycards(Resource):
   def get(self):
     """ 
-    Customized display function. Grabs custom recipes (user submitted)
-    from database and send to React for display on UI.
+    Grabs custom recipes (user submitted) \
+    from database and formatted for display.
     """
     recipes = Recipe.query.filter_by(author=2).all()
     numRecipes = len(recipes)
@@ -172,14 +178,20 @@ class displaycards(Resource):
       'recipes': recipes
     }
 
-# Input: List of ingredients to query
-# Output: List of recipes, quantities, and steps
 @api.route("/searchrecipe", endpoint="searchrecipe")
-# @app.route("/searchrecipe")
+@api.param('searchStr', 'Ingredient to search')
 class searchRecipe(Resource):
   def get(self):
+    """
+    Accepts a query parameter search ingredient and returns \
+    a list of recipes that contain the ingredient. The list \
+    of recipes is formatted and sorted by lowest total time.
+    """
+    # Obtain search string query parameter
     args = flask.request.args
     search = args['searchStr']
+
+    # Query for ingredient in database
     ing = Ingredient.query.filter_by(name=search).first()
     if ing is not None:
       iID = ing.IngredientID
@@ -189,11 +201,11 @@ class searchRecipe(Resource):
         'recipes': []
       }
 
+    # Query quantities for recipe IDs to return matching recipes
     quants = Quantity.query.filter_by(QIngredientID=iID).all()
     recipeIDs = set()
     for quant in quants:
       recipeIDs.add(quant.QRecipeID)
-
     recipes = []
     for rID in recipeIDs:
       recipe = Recipe.query.filter_by(RecipeID=rID).first()
@@ -205,48 +217,7 @@ class searchRecipe(Resource):
       'recipes': recipes
     }
 
-class Recipe(db.Model):
-  RecipeID = db.Column(INTEGER, unique=True, primary_key=True)
-  name = db.Column(VARCHAR(45), unique=True, nullable=False)
-  description = db.Column(MEDIUMTEXT)
-  totalTime = db.Column(INTEGER, nullable=False)
-  author = db.Column(INTEGER, db.ForeignKey('user.UserID'), nullable=False)
-  servingSize = db.Column(INTEGER, nullable=False)
-  quantities = db.relationship('Quantity', backref='quantity_RecipeID', lazy='joined')
-
-class User(db.Model):
-  UserID = db.Column(INTEGER, unique=True, primary_key=True)
-  username = db.Column(VARCHAR(16), unique=True, nullable=False)
-  email = db.Column(VARCHAR(255), unique=True, nullable=False)
-  password = db.Column(VARCHAR(32), nullable=False)
-  create_time = db.Column(TIMESTAMP, nullable=False)
-  recipes = db.relationship('Recipe', backref='recipe_author', lazy=True)
-
-class Quantity(db.Model):
-  QRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
-  QIngredientID = db.Column(INTEGER, db.ForeignKey('ingredient.IngredientID'), primary_key=True)
-  value = db.Column(FLOAT, nullable=False)
-  measurement = db.Column(VARCHAR(45), nullable=False)
-  state = db.Column(VARCHAR(45))
-
-class Ingredient(db.Model):
-  IngredientID = db.Column(INTEGER, unique=True, primary_key=True)
-  name = db.Column(VARCHAR(45), nullable=False)
-  quantities = db.relationship('Quantity', backref='quantity_IngredientID', lazy=True)
-
-class Steps(db.Model):
-  StepsRecipeID = db.Column(INTEGER, db.ForeignKey('recipe.RecipeID'), primary_key=True)
-  order = db.Column(INTEGER, unique=True, primary_key=True)
-  direction = db.Column(MEDIUMTEXT, nullable=False)
-
 def main():
-  # test_recipe = Recipe.query.filter_by(name='Beef Noodle Soups').first()
-  # if test_recipe is not None:
-  #   print(test_recipe.RecipeID)
-  # else:
-  #   print(test_recipe)
-  # test_quantity = Quantity.query.filter_by(QRecipeID=200).first()
-  # print(test_quantity.value)
   app.run()
 
 if __name__ == '__main__':
