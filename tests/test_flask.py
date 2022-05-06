@@ -13,11 +13,12 @@ def test_homepage():
   with flask_app.test_client() as test_client:
     response = test_client.get('/')
     assert response.status_code == 200
-    
+
 
 def test_submit():
   """
-  Tests form submission by asserting a status code of 320, meaning that it's been redirected to the /add page
+  Tests form submission by asserting a status code of 320, 
+  meaning that it's been redirected to the /add page
   """
   with flask_app.test_client() as test_client:
     # Sample recipe to add
