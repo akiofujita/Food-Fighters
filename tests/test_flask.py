@@ -17,7 +17,7 @@ def test_homepage():
 
 def test_submit():
   """
-  Tests form submission by asserting a status code of 320, 
+  Tests form submission by asserting a status code of 320,
   meaning that it's been redirected to the /add page
   """
   with flask_app.test_client() as test_client:
@@ -31,6 +31,6 @@ def test_submit():
       "ing_quant": "1",
       "ing_units": "",
       "steps": "Ignore this :)",
-  })
+    })
     # If these are true, then we've successfully redirected and submitted
     assert response.status_code == 302

@@ -6,9 +6,9 @@ import sys
 import csv
 
 
-units = ['ounces', 'ounce', 'oz', 'pounds', 'pound', 'lb', 'lbs', 'gallons', 'gallon', 'gal', 'quarts', 
-         'quart', 'qt', 'pints', 'pint', 'cups', 'cup', 'tablespoons', 'tablespoon', 'tbsp', 'tsp', 
-         'teaspoons', 'teaspoon', 'fluid ounce', 'fluid ounces', 'fl. oz', 'liters', 'liter', 'pinches', 
+units = ['ounces', 'ounce', 'oz', 'pounds', 'pound', 'lb', 'lbs', 'gallons', 'gallon', 'gal', 'quarts',
+         'quart', 'qt', 'pints', 'pint', 'cups', 'cup', 'tablespoons', 'tablespoon', 'tbsp', 'tsp',
+         'teaspoons', 'teaspoon', 'fluid ounce', 'fluid ounces', 'fl. oz', 'liters', 'liter', 'pinches',
          'pinch', 'cloves', 'clove']
 
 
@@ -102,15 +102,15 @@ def scrape(scraper):
         ingredient = ingredient.split('  ')[0] + '  ' + ingredient.split('  ')[1].split(' ', 1)[1]
 
     # Then, look for numerical value (this includes fractions and unicode)
-    if len(re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))'
-    , ingredient)) > 0:
+    if len(re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))',
+                      ingredient)) > 0:
       # Multiply by p_value (default is 1, but will change if there are values in parenthesis)
       value = re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))',
         ingredient)[0][0]
       value = str(convert_to_float(value)*convert_to_float(p_value[0]))
       # Get rid of number now that we have that
-      ingredient = re.sub(r"(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))", ""
-      , ingredient, 1)[1:]
+      ingredient = re.sub(r"(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))",
+                          "", ingredient, 1)[1:]
 
     state = ''
     # Get state which is always indicated by the comma
@@ -141,9 +141,9 @@ def scrape(scraper):
     count += 1
 
   return recipe, steps, ingredients
-        
+
   
-def write_to_db (recipe, steps, ingredients):
+def write_to_db(recipe, steps, ingredients):
   """
   Args:
     scraper (scrape_me object): raw data obtained from recipe_scrapers
@@ -151,11 +151,11 @@ def write_to_db (recipe, steps, ingredients):
   Returns:
     Recipe: Recipe object
     Ingredients: list of Ingredient objects
-    Steps: list of Steps objects 
+    Steps: list of Steps objects
   """
-  conn = mysql.connector.connect(user='root',password='F00D_fighters22',host = 'localhost',database='foodfighters')
+  conn = mysql.connector.connect(user='root', password='F00D_fighters22', host='localhost', database='foodfighters')
   cursor = conn.cursor(buffered=True)
-  
+
   cursor.execute(
       "INSERT INTO recipe (name,totalTime,servingSize,author) VALUES (%s, %s, %s, %s)",
       [recipe.name, recipe.time, recipe.servingSize, recipe.user])
@@ -227,5 +227,5 @@ def main():
     sys.exit("Not a valid allrecipes.com link or a .csv file path.")
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
   main()
