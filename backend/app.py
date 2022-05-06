@@ -1,5 +1,5 @@
 """ This is the app.py module that keeps tracks of the various webapp routes """
-import email
+# import email
 import sqlite3
 import flask
 from flask_restx import Resource, Api
@@ -65,6 +65,8 @@ def formatRecipes(recipes):
       ingredients += f'{amount} {unit} {ing_name}, '
     ingredients = ingredients[:-2]
     recipesList.append([recipe_name, ingredients, time])
+  # Sort by time
+  recipesList.sort(key = lambda x: x[2])
   recipes = orgRecipe(recipesList)
   return recipes
 

@@ -10,6 +10,7 @@ db = SQLAlchemy()
 # login = LoginManager()
 # login.login_view = "users.login"
 
+
 def create_app(config_filename=None):
   """ Factory building function that creates an instance of an app """
   test = app

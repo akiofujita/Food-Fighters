@@ -25,6 +25,12 @@
   overflow: auto;
 
   width: 100%;
+  /* border: solid 1px; */
+}
+
+.searchBox {
+  margin: 1vw 0vw 3vw 0vw;
+  /* border: solid 1px; */
 }
 
 #search_string {
@@ -32,5 +38,7 @@
 }
 
 #searchIcon {
-  margin-top: 2.5vh;
+  /* margin-top: 2px; */
+  margin: 2vw 0vw 3vw 0vw;
+  /* border: solid 1px; */
 }
