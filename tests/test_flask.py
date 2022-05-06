@@ -33,14 +33,3 @@ def test_submit():
   })
     # If these are true, then we've successfully redirected and submitted
     assert response.status_code == 302
-
-
-def test_search():
-  with flask_app.test_client() as test_client:
-    # Sample recipe to add
-    response = test_client.get('/searchrecipe', data={
-        "searchStr": "onion",
-    })
-    # If these are true, then we've successfully submitted
-    print(response.data)
-    assert response.data['num_recipes'] >= 1
