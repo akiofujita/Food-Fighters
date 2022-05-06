@@ -42,5 +42,5 @@ def test_search():
         "searchStr": "test",
     })
     # If these are true, then we've successfully submitted
-    print(response.data["num_recipes"])
+    print(response.data)
     assert response.data['num_recipes'] >= 1
