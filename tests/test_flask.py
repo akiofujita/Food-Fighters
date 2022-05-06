@@ -39,7 +39,7 @@ def test_search():
   with flask_app.test_client() as test_client:
     # Sample recipe to add
     response = test_client.get('/searchrecipe', data={
-        "searchStr": "test",
+        "test",
     })
     # If these are true, then we've successfully submitted
     print(response.data)
