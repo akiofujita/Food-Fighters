@@ -75,7 +75,7 @@ def scrape(scraper):
   Returns:
     Recipe: Recipe object
     Ingredients: list of Ingredient objects
-    Steps: list of Steps objects 
+    Steps: list of Steps objects
   """
   # Get recipe data
   serving = re.findall(r'\d+', scraper.yields())[0]
@@ -100,17 +100,17 @@ def scrape(scraper):
         # Also get rid of the parenthesis from the ingredient string as well as the container
         ingredient = re.sub(r"\([^()]*\)", "", ingredient, 1)
         ingredient = ingredient.split('  ')[0] + '  ' + ingredient.split('  ')[1].split(' ', 1)[1]
-  
+
     # Then, look for numerical value (this includes fractions and unicode)
     if len(re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))'
-        , ingredient)) > 0:
+    , ingredient)) > 0:
       # Multiply by p_value (default is 1, but will change if there are values in parenthesis)
-      value = re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))', 
+      value = re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))',
         ingredient)[0][0]
       value = str(convert_to_float(value)*convert_to_float(p_value[0]))
       # Get rid of number now that we have that
       ingredient = re.sub(r"(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))", ""
-        , ingredient, 1)[1:]
+      , ingredient, 1)[1:]
 
     state = ''
     # Get state which is always indicated by the comma
@@ -153,7 +153,7 @@ def write_to_db (recipe, steps, ingredients):
     Ingredients: list of Ingredient objects
     Steps: list of Steps objects 
   """
-  conn = mysql.connector.connect(user='root', password='F00D_fighters22', host = 'localhost', database='foodfighters')
+  conn = mysql.connector.connect(user='root',password='F00D_fighters22',host = 'localhost',database='foodfighters')
   cursor = conn.cursor(buffered=True)
   
   cursor.execute(
