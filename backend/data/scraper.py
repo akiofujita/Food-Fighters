@@ -1,4 +1,3 @@
-from fileinput import filename
 from recipe_scrapers import scrape_me
 import mysql.connector
 from unicodedata import numeric
@@ -12,6 +11,7 @@ units = ['ounces', 'ounce', 'oz', 'pounds', 'pound', 'lb', 'lbs', 'gallons', 'ga
          'teaspoons', 'teaspoon', 'fluid ounce', 'fluid ounces', 'fl. oz', 'liters', 'liter', 'pinches', 
          'pinch', 'cloves', 'clove']
 
+
 class Recipe:
   def __init__(self, name, time, servingSize, user):
     self.name = name
@@ -19,17 +19,20 @@ class Recipe:
     self.servingSize = servingSize
     self.user = user
 
+
 class Ingredient:
   def __init__(self, value, measurement, name, state):
     self.value = value
     self.measurement = measurement
     self.name = name
     self.state = state
-    
+
+
 class Step:
   def __init__(self, order, direction):
     self.order = order
     self.direction = direction
+
 
 def convert_to_float(frac_str):
   """
@@ -63,6 +66,7 @@ def convert_to_float(frac_str):
     v = float(frac_str[:-1]) + numeric(frac_str[-1])
   return v
 
+
 def scrape(scraper):
   """
   Args:
@@ -82,7 +86,7 @@ def scrape(scraper):
   for ingredient in scraper.ingredients():
     p_value = '1'
     value = ''
-    
+
     # First, get parenthesis info i.e. 1 (7 ounce can) or 6 (9 inch) tortillas
     parenthesis = r"(?i)\((.*?)\)"
     in_parenthesis = re.findall(parenthesis, ingredient)
@@ -99,14 +103,14 @@ def scrape(scraper):
   
     # Then, look for numerical value (this includes fractions and unicode)
     if len(re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))'
-                      , ingredient)) > 0:
+        , ingredient)) > 0:
       # Multiply by p_value (default is 1, but will change if there are values in parenthesis)
       value = re.findall(r'(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))', 
-                                              ingredient)[0][0]
+        ingredient)[0][0]
       value = str(convert_to_float(value)*convert_to_float(p_value[0]))
       # Get rid of number now that we have that
       ingredient = re.sub(r"(?u)((\d*\ ?[\u00BC-\u00BE\u2150-\u215E]+)|(\d*\ *\d+/\d+)|([.]?\d+))", ""
-                          , ingredient, 1)[1:]
+        , ingredient, 1)[1:]
 
     state = ''
     # Get state which is always indicated by the comma
@@ -135,7 +139,7 @@ def scrape(scraper):
   for instruction in instructions:
     steps.append(Step(count, instruction))
     count += 1
-  
+
   return recipe, steps, ingredients
         
   
@@ -153,7 +157,7 @@ def write_to_db (recipe, steps, ingredients):
   cursor = conn.cursor(buffered=True)
   
   cursor.execute(
-      "INSERT INTO recipe (name,totalTime,servingSize,author) VALUES (%s, %s, %s, %s)", 
+      "INSERT INTO recipe (name,totalTime,servingSize,author) VALUES (%s, %s, %s, %s)",
       [recipe.name, recipe.time, recipe.servingSize, recipe.user])
   # Get RecipeID from newly generated row
   cursor.execute("SELECT RecipeID FROM foodfighters.recipe WHERE name = %s", [recipe.name])
@@ -161,8 +165,8 @@ def write_to_db (recipe, steps, ingredients):
 
   for step in steps:
     cursor.execute(
-        "INSERT INTO steps (StepsRecipeID, steps.order, direction) VALUES (%s, %s, %s)", 
-        [RecipeID, step.order, step.direction])
+    "INSERT INTO steps (StepsRecipeID, steps.order, direction) VALUES (%s, %s, %s)", 
+    [RecipeID, step.order, step.direction])
 
   for ingredient in ingredients:
     # CHECK FOR DUPLICATES FIRST
@@ -171,7 +175,7 @@ def write_to_db (recipe, steps, ingredients):
     # Only insert if there are no duplicates (aka it's unique)
     if count == 0:
       cursor.execute(
-          "INSERT INTO ingredient (name) VALUES (%s)", [ingredient.name])
+        "INSERT INTO ingredient (name) VALUES (%s)", [ingredient.name])
 
     # Get IngredientID
     # If value is a fraction
@@ -184,12 +188,12 @@ def write_to_db (recipe, steps, ingredients):
     # Insert quantity
     if ingredient.value == '':
       cursor.execute(
-      "INSERT INTO quantity (QRecipeID, QIngredientID, measurement, state) VALUES (%s, %s, %s, %s)",
-      [RecipeID, IngredientID, ingredient.measurement, ingredient.state])
+        "INSERT INTO quantity (QRecipeID, QIngredientID, measurement, state) VALUES (%s, %s, %s, %s)",
+        [RecipeID, IngredientID, ingredient.measurement, ingredient.state])
     else:
       cursor.execute(
-          "INSERT INTO quantity (QRecipeID, QIngredientID, value, measurement, state) VALUES (%s, %s, %s, %s, %s)"
-          , [RecipeID, IngredientID, ingredient.value, ingredient.measurement, ingredient.state])
+        "INSERT INTO quantity (QRecipeID, QIngredientID, value, measurement, state) VALUES (%s, %s, %s, %s, %s)"
+        , [RecipeID, IngredientID, ingredient.value, ingredient.measurement, ingredient.state])
   conn.commit()
   cursor.close()
 
@@ -201,7 +205,7 @@ def main():
 
   allrecipe = r"(?i)\b((?:https?://|www[.]|(allrecipes[.]com/recipe/+[0-9]{5,6})|[\w\d-]*))"
   isvalid = re.compile(allrecipe)
-  
+
   # Case 1: .csv file
   if '.csv' in sys.argv[1]:
     with open(sys.argv[1], 'r') as csvfile:
@@ -211,8 +215,8 @@ def main():
         recipe, steps, ingredients = scrape(scraper)
         write_to_db(recipe, steps, ingredients)
     sys.exit("Done")
-      
-  # Case 2: allrecipes.com  
+
+  # Case 2: allrecipes.com
   elif re.search(isvalid, sys.argv[1]):
     scraper = scrape_me(sys.argv[1])
     recipe, steps, ingredients = scrape(scraper)
