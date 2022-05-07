@@ -2,6 +2,7 @@ flake8
 Flask
 flask-restx
 Flask-SQLAlchemy
+mysqlclient
 mysql-connector
 mysql-connector-python
 pylint

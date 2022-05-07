@@ -29,6 +29,8 @@ We are currently migrating from SQLite to mySQL as well as creating accounts wit
 - 0.3.0 – Commit 7296846: First commit merging/rebasing UI features
 - 0.3.1-0.3.12 – Updating certain backend and frontend elements to prepare for midterm demo
 - 0.3.13 – Commit (merge) 40fbf62: Syntax cleanup for app.py and updating dependencies
+- 1.0.0 – Primary release - Search, display, and submit custom recipes
+- 1.0.1 – Updated dependency for mysqlclient
 
 
 Inspiration
