@@ -1,0 +1,22 @@
+.dialogBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  width: 10vw;
+}
+
+.recipe_name {
+  margin: 20px 20px 0px 20px;
+}
+
+.prep_time {
+  margin: 5px 20px 0px 20px;
+}
+
+.ingredients {
+  margin: 0px 20px 20px 20px;
+}

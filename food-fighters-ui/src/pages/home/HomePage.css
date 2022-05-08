@@ -1,0 +1,62 @@
+.homePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
+.homeHeader {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+
+  text-align: center;
+  color: #43af2a;
+}
+
+.recipeSearch {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  width: 100%;
+}
+
+.searchBox {
+  margin: 1vw 0vw 3vw 0vw;
+}
+
+#search_string {
+  min-width: 50vw;
+}
+
+#searchIcon {
+  margin: 2vw 0vw 3vw 0vw;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
+.clip {
+  margin: 1px 1vw 2vw 1vw;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+}

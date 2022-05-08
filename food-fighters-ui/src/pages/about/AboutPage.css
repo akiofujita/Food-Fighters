@@ -1,0 +1,21 @@
+.aboutPage {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+#aboutHeader {
+  margin-top: 1vw;
+  margin-bottom: 0.5vw;
+
+  text-align: center;
+  color: #43af2a;
+}
+
+#aboutBody {
+  width: 80%;
+  font-size: large;
+  margin-bottom: 3vh;
+}

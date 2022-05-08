@@ -1,0 +1,14 @@
+flake8
+Flask
+flask-restx
+Flask-SQLAlchemy
+mysqlclient
+mysql-connector
+mysql-connector-python
+pylint
+pytest
+pytest-cov
+python-dotenv
+recipe_scrapers
+SQLAlchemy
+Werkzeug

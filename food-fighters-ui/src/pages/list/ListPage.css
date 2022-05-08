@@ -1,0 +1,7 @@
+.listPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #43af2a;
+}

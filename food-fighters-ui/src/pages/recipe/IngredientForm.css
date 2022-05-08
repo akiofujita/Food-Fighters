@@ -1,0 +1,65 @@
+.ingredientForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  margin: 1vw 0vw 1vw 0vw;
+  width: 100%;
+}
+
+.ingredientList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  width: 95%;
+}
+
+.ingredientItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  width: 100%;
+}
+
+.ingredientField {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  padding-top: 0.5vw;
+  width: 90%;
+}
+
+.removeBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+
+  padding-top: 0.5vw;
+  width: 8%;
+}
+
+.addBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 0.5vw;
+  width: 100%;
+}

@@ -1,0 +1,38 @@
+.recipeForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  margin: 1vw 0vw 1vw 0vw;
+  min-width: 60vw;
+  color: #43af2a;
+}
+
+.recipeDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  margin: 0vw 0vw 1vw 0vw;
+  width: 95%;
+}
+
+.timeDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+  width: 95%;
+}
+
+#submitBtn {
+  margin: 1.5vw 0vw 1vw 0vw;
+}

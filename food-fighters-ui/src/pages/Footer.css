@@ -1,0 +1,11 @@
+.footer {
+  background-color: #43af2a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#copyright {
+  color: white;
+}
