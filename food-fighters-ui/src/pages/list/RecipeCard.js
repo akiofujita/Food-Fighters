@@ -22,23 +22,23 @@ export default function RecipeCard({recipe_name, ingredients, prep_time}) {
       <Typography gutterBottom variant="h5" component="div">
         <b>{recipe_name}</b>
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body2" color="text.secondary" component="div">
         <b>Prep Time:</b> {prep_time} minutes
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body2" color="text.secondary" component="div">
         <b>Ingredients:</b>
         <ul>
           {ingredients.map((ingredient, i) => {
             if (i >= 0 && i <= 4) {
               return (
-                <li>
+                <li key={i}>
                   {ingredient}
                 </li>
               );
             }
             else {
               return (
-                <div></div>
+                <div key={i}></div>
               );
             }
           })}

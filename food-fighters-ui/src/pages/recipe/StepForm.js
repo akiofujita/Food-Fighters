@@ -35,7 +35,7 @@ export default function StepForm() {
       <div className='stepsList'>
         {inputList.map((step, i) => {
           return (
-            <div className='stepsItem'>
+            <div className='stepsItem' key={i}>
               <div className='stepsField'>
                 <h5 className='stepsNum'>{'Step ' + (i + 1).toString()}</h5>
                 <TextField

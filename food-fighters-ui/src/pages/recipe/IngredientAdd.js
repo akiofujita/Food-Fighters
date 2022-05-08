@@ -13,7 +13,6 @@ const IngredientList = props => {
           <TextField
             required
             label="Name"
-            // value={ing_name}
             sx={{ m: 1, width: '30ch' }}
             data-id={idx}
             id={ing_name}
@@ -21,7 +20,6 @@ const IngredientList = props => {
           <TextField
             required
             label="Quantity"
-            // value={ing_name}
             sx={{ m: 1, width: '30ch' }}
             data-id={idx}
             id={ing_quant}

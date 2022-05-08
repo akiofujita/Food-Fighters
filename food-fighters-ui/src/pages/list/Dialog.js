@@ -20,17 +20,17 @@ export default function SimpleDialog(props) {
           </Typography>
         </div>
         <div className='prep_time'>
-          <Typography variant="h5" color="text.secondary">
+          <Typography variant="h5" color="text.secondary" component="div">
             <b>Prep Time:</b> {selectedRecipe[2]} minutes
           </Typography>
         </div>
         <div className='ingredients'>
-          <Typography variant="h5" color="text.secondary">
+          <Typography variant="h5" color="text.secondary" component="div">
             <b>Ingredients:</b>
             <ul>
               {selectedRecipe[1].map((ingredient, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                     {ingredient}
                   </li>
                 );

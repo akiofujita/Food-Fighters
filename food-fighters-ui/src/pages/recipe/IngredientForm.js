@@ -60,7 +60,7 @@ export default function IngredientForm() {
       <div className='ingredientList'>
         {inputList.map((values, i) => {
           return (
-            <div className='ingredientItem'>
+            <div className='ingredientItem' key={i}>
               <div className='ingredientField'>
                 <TextField
                   required

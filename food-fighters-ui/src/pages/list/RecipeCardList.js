@@ -18,21 +18,19 @@ export default function RecipeCardList() {
   return (
     <div className='recipeCardList'>
       <div className='cards'>
-        {getCards(numRecipes, recipeList)}
+        {numRecipes > 0 && recipeList &&
+         recipeList.map((recipe, i) => {
+          return (
+            <div key={i}>
+              <RecipeCard
+                recipe_name={recipe[0]}
+                ingredients={recipe[1]}
+                prep_time={recipe[2]}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
-}
-
-function getCards(numRecipes, recipes) {
-  const cardList = [];
-  if (recipes) {
-    for (var i = 0; i < numRecipes; i++) {
-      cardList.push(<RecipeCard
-        recipe_name={recipes[i][0]}
-        ingredients={recipes[i][1]}
-        prep_time={recipes[i][2]} />)
-    }
-  }
-  return cardList;
 }

@@ -197,7 +197,7 @@ class searchRecipe(Resource):
       iID = ing.IngredientID
     else:
       return {
-        'num_recipes': 0,
+        'num_recipes': -1,
         'recipes': []
       }
 

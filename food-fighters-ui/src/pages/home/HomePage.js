@@ -6,6 +6,7 @@ import React, {useState, useEffect} from 'react';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import ClipLoader from 'react-spinners/ClipLoader'
 import {ThemeProvider} from '@mui/material/styles';
 import {theme} from '../../ColorTheme';
 
@@ -15,36 +16,56 @@ export default function HomePage() {
     numRecipes: null,
     recipeList: null
   })
-  let [didSearch,  setDidSearch]  = useState(false);
+  let [searchCount,  setSearchCount] = useState(0);
+  let [isLoading,    setIsLoading  ] = useState(false);
+  let [noResults,    setNoResults  ] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (searchStr !== "") {
-        fetch('/searchrecipe?searchStr=' + searchStr)
-        .then(response => response.json())
-        .then(data => {
-          setRecipeRes({numRecipes: data.num_recipes, recipeList: data.recipes});
-        });
-        setDidSearch(true);
-      }
+    if (recipeRes.numRecipes > 0 && recipeRes.recipeList) {
+      setIsLoading(false);
+      setNoResults(false);
     }
-
-    fetchData();
-  }, [searchStr]);
+    else if (recipeRes.numRecipes === -1) {
+      setIsLoading(false);
+      setNoResults(true);
+    }
+  }, [recipeRes])
 
   function handleChange(event) {
     setSearchStr(event.target.value);
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    setSearchCount(searchCount + 1);
+
+    const fetchData = async () => {
+      if (searchStr !== "") {
+        setIsLoading(true);
+        setNoResults(false);
+        fetch('/searchrecipe?searchStr=' + searchStr)
+        .then(response => response.json())
+        .then(data => {
+          setRecipeRes({numRecipes: data.num_recipes, recipeList: data.recipes});
+          if(searchCount === 0) {
+            setSearchCount(searchCount + 1);
+          }
+        });
+      }
+    }
+
+    fetchData();
+  }
+
   return (
     <div className='homePage'>
       <ThemeProvider theme={theme}>
-        {!didSearch &&
+        {searchCount === 0 &&
           <div className='homeHeader'>
             <h1>Welcome to Food Fighters!</h1>
           </div>
         }
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className='recipeSearch'>
             <div className='searchBox'>
               <TextField
@@ -64,23 +85,29 @@ export default function HomePage() {
             </IconButton>
           </div>
         </form>
-        <div className='cards'>
-          {getCards(recipeRes.numRecipes, recipeRes.recipeList)}
+        <div className='results'>
+          <div className='clip'>
+            <ClipLoader loading={isLoading}/>
+          </div>
+          <div className='noResults'>
+            {noResults && <h4>No Results Found</h4>}
+          </div>
+          <div className='cards'>
+            {recipeRes.numRecipes > 0 && recipeRes.recipeList &&
+            recipeRes.recipeList.map((recipe, i) => {
+              return (
+                <div key={i}>
+                  <RecipeCard
+                    recipe_name={recipe[0]}
+                    ingredients={recipe[1]}
+                    prep_time={recipe[2]}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </ThemeProvider>
     </div>
   );
 };
-
-function getCards(numRecipes, recipes) {
-  const cardList = [];
-  if (recipes) {
-    for (var i = 0; i < numRecipes; i++) {
-      cardList.push(<RecipeCard
-        recipe_name={recipes[i][0]}
-        ingredients={recipes[i][1]}
-        prep_time={recipes[i][2]} />)
-    }
-  }
-  return cardList;
-}
