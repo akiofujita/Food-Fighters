@@ -1,9 +1,9 @@
-import './NavBar.css';
-import ffLogo from '../assets/logos/ff-logo.png'
-
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import ffLogo from '../assets/logos/ff-logo.png'
+import './NavBar.css';
 
+// Navigation bar component
 export default function NavBar() {
   const [active, setActive] = useState('Home');
 

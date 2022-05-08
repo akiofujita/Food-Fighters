@@ -8,6 +8,7 @@ import {ThemeProvider} from '@mui/material/styles';
 import {theme} from '../../ColorTheme';
 import './IngredientForm.css';
 
+// List of units to choose from
 const units = [
   {
     value: 'met-0',
@@ -23,6 +24,7 @@ const units = [
   }
 ];
 
+// Form for inputting ingredients
 export default function IngredientForm() {
   const [inputList, setInputList] = useState([{
     ing_name: '',
@@ -30,7 +32,7 @@ export default function IngredientForm() {
     ing_units: ''
   }]);
 
-  // handle input change
+  // Handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -38,14 +40,14 @@ export default function IngredientForm() {
     setInputList(list);
   };
   
-  // handle click event of the Remove button
+  // Handle click event of the Remove button
   const handleRemoveClick = (index) => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
   };
   
-  // handle click event of the Add button
+  // Handle click event of the Add button
   const handleAddClick = () => {
     setInputList([...inputList, {
       ing_name: '',
@@ -58,9 +60,11 @@ export default function IngredientForm() {
     <div className='ingredientForm'>
       <h3>Ingredient Details</h3>
       <div className='ingredientList'>
+
         {inputList.map((values, i) => {
           return (
             <div className='ingredientItem' key={i}>
+
               <div className='ingredientField'>
                 <TextField
                   required
@@ -97,6 +101,7 @@ export default function IngredientForm() {
                   ))}
                 </TextField>
               </div>
+
               <div className='removeBtn'>
                 {inputList.length !== 1 &&
                   <ThemeProvider theme={theme}>
@@ -110,6 +115,7 @@ export default function IngredientForm() {
                   </ThemeProvider>
                 }
               </div>
+
               <div className='addBtn'>
                 {inputList.length - 1 === i &&
                   <ThemeProvider theme={theme}>
@@ -122,9 +128,11 @@ export default function IngredientForm() {
                   </ThemeProvider>
                 }
               </div>
+
             </div>
           );
         })}
+        
       </div>
     </div>
   );

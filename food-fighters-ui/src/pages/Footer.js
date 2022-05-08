@@ -1,6 +1,7 @@
 import './Footer.css'
 import '../App.css'
 
+// Footer bar component
 export default function Footer() {
   return (
     <div className='footer'>

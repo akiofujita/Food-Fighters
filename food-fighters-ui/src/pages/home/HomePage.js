@@ -1,6 +1,3 @@
-import './HomePage.css';
-import '../../App.css';
-
 import RecipeCard from './RecipeCard';
 import React, {useState, useEffect} from 'react';
 import TextField from '@mui/material/TextField';
@@ -9,17 +6,21 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClipLoader from 'react-spinners/ClipLoader'
 import {ThemeProvider} from '@mui/material/styles';
 import {theme} from '../../ColorTheme';
+import './HomePage.css';
+import '../../App.css';
 
+// Home and recipe search page!
 export default function HomePage() {
   let [searchStr,  setSearchStr]  = useState("");
   let [recipeRes,  setRecipeRes]  = useState({
     numRecipes: null,
     recipeList: null
-  })
+  });
   let [searchCount,  setSearchCount] = useState(0);
   let [isLoading,    setIsLoading  ] = useState(false);
   let [noResults,    setNoResults  ] = useState(false);
 
+  // Update status of loading or getting no results
   useEffect(() => {
     if (recipeRes.numRecipes > 0 && recipeRes.recipeList) {
       setIsLoading(false);
@@ -31,10 +32,12 @@ export default function HomePage() {
     }
   }, [recipeRes])
 
+  // Handle change in the typed search string
   function handleChange(event) {
     setSearchStr(event.target.value);
   }
 
+  // Handle submission of the search
   function handleSubmit(event) {
     event.preventDefault();
     setSearchCount(searchCount + 1);
@@ -60,11 +63,13 @@ export default function HomePage() {
   return (
     <div className='homePage'>
       <ThemeProvider theme={theme}>
+        
         {searchCount === 0 &&
           <div className='homeHeader'>
             <h1>Welcome to Food Fighters!</h1>
           </div>
         }
+
         <form onSubmit={handleSubmit}>
           <div className='recipeSearch'>
             <div className='searchBox'>
@@ -85,9 +90,10 @@ export default function HomePage() {
             </IconButton>
           </div>
         </form>
+
         <div className='results'>
           <div className='clip'>
-            <ClipLoader loading={isLoading}/>
+            <ClipLoader loading={isLoading} color={'#43af2a'}/>
           </div>
           <div className='noResults'>
             {noResults && <h4>No Results Found</h4>}
@@ -107,6 +113,7 @@ export default function HomePage() {
             })}
           </div>
         </div>
+
       </ThemeProvider>
     </div>
   );

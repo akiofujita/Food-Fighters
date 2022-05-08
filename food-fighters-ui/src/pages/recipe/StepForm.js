@@ -7,24 +7,25 @@ import {ThemeProvider} from '@mui/material/styles';
 import {theme} from '../../ColorTheme';
 import './StepForm.css';
 
+// Form for inputting steps
 export default function StepForm() {
   const [inputList, setInputList] = useState(['']);
 
-  // handle input change
+  // Handle input change
   const handleInputChange = (e, index) => {
     const list = [...inputList];
     list[index] = e.target.value;
     setInputList(list);
   };
   
-  // handle click event of the Remove button
+  // Handle click event of the Remove button
   const handleRemoveClick = (index) => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
   };
   
-  // handle click event of the Add button
+  // Handle click event of the Add button
   const handleAddClick = () => {
     setInputList([...inputList, '']);
   };
@@ -33,9 +34,11 @@ export default function StepForm() {
     <div className='stepsForm'>
       <h3>Step Details</h3>
       <div className='stepsList'>
+
         {inputList.map((step, i) => {
           return (
             <div className='stepsItem' key={i}>
+
               <div className='stepsField'>
                 <h5 className='stepsNum'>{'Step ' + (i + 1).toString()}</h5>
                 <TextField
@@ -48,6 +51,7 @@ export default function StepForm() {
                   sx={{ width: '90%' }}
                 />
               </div>
+
               <div className='removeBtn2'>
                 {inputList.length !== 1 &&
                   <ThemeProvider theme={theme}>
@@ -61,6 +65,7 @@ export default function StepForm() {
                   </ThemeProvider>
                 }
               </div>
+
               <div className='addBtn2'>
                 {inputList.length - 1 === i &&
                   <ThemeProvider theme={theme}>
@@ -73,9 +78,11 @@ export default function StepForm() {
                   </ThemeProvider>
                 }
               </div>
+
             </div>
           );
         })}
+        
       </div>
     </div>
   );

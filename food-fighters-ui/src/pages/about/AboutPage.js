@@ -1,6 +1,7 @@
 import './AboutPage.css';
 import '../../App.css';
 
+// Some background for our project!
 export default function AboutPage() {
   return (
     <div className='aboutPage'>

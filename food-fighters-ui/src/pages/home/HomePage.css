@@ -36,9 +36,7 @@
 }
 
 #searchIcon {
-  /* margin-top: 2px; */
   margin: 2vw 0vw 3vw 0vw;
-  /* border: solid 1px; */
 }
 
 .results {
@@ -52,10 +50,6 @@
 
 .clip {
   margin: 1px 1vw 2vw 1vw;
-}
-
-.noResults {
-  
 }
 
 .cards {

@@ -1,7 +1,8 @@
+import RecipeCardList from './RecipeCardList';
 import './ListPage.css';
 import '../../App.css';
-import RecipeCardList from './RecipeCardList';
 
+// Page that displays list of custom recipes
 export default function ListPage() {
   return (
     <div className='listPage'>

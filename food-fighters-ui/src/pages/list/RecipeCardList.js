@@ -1,6 +1,6 @@
-import './RecipeCardList.css';
 import React, {useState, useEffect} from 'react';
 import RecipeCard from './RecipeCard';
+import './RecipeCardList.css';
 
 export default function RecipeCardList() {
   let [numRecipes, setNumRecipes] = useState(null);

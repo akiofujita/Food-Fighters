@@ -1,14 +1,16 @@
 import React from "react";
 import TextField from '@mui/material/TextField';
 
+// Component for one row of ingredient input form
 const IngredientList = props => {
   return props.ingDetails.map((val, idx) => {
     let ing_name = `ing_name-${idx}`,
       ing_quant = `ing_quant-${idx}`,
       ing_units = `ing_units-${idx}`
-    alert(props.ingDetails);
+
     return (
       <div className="form-row" key={val.index}>
+
         <div className="col">
           <TextField
             required
@@ -25,6 +27,7 @@ const IngredientList = props => {
             id={ing_quant}
           />
         </div>
+
         <div className="col">
           <label>Units</label>
           <select className="form-control" name="units" id={ing_units} data-id={idx}>
@@ -33,6 +36,7 @@ const IngredientList = props => {
             <option>pinch</option>
           </select>
         </div>
+
         <div className="col p-4">
           {idx === 0 ? (
             <button
@@ -51,6 +55,7 @@ const IngredientList = props => {
             </button>
           )}
         </div>
+        
       </div>
     );
   });
